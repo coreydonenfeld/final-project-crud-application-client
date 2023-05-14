@@ -12,8 +12,6 @@
 
 /***************************************************************************************************************************************************************************************/
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
-
 :root {
   	--white: #fff;
 	--off-white: #f9faff;
@@ -25,8 +23,7 @@
 	--gray-dark: #c4c4c4;
 	--gray-darker: #a8a8a8;
   	--body-font: 'IBM Plex Sans', sans-serif;
-	--heading-font: Arial, Helvetica, sans-serif;
-    --mono-font: 'DM Mono', monospace;
+	--heading-font: 'Bebas Neue', sans-serif;
 	--container-width: 90vw;
 	--container-max-width: 1600px;
 	--container-outer-padding: 50px;
@@ -100,27 +97,27 @@ h6,
 
 h1,
 .heading-1 {
-	font: 700 calc(50rem / 16)/calc(62 / 50) var(--body-font);
+	font: 700 calc(50rem / 16)/calc(62 / 50) var(--heading-font);
 }
 
 h2,
 .heading-2 {
-	font: 700 calc(40rem / 16)/calc(50 / 40) var(--body-font);
+	font: 700 calc(40rem / 16)/calc(50 / 40) var(--heading-font);
 }
 
 h3,
 .heading-3 {
-	font: 700 calc(32rem / 16)/calc(42 / 32) var(--body-font);
+	font: 700 calc(32rem / 16)/calc(42 / 32) var(--heading-font);
 }
 
 h4,
 .heading-4 {
-	font: 600 calc(28rem / 16)/calc(38 / 28) var(--body-font);
+	font: 600 calc(28rem / 16)/calc(38 / 28) var(--heading-font);
 }
 
 h5,
 .heading-5 {
-	font: 700 calc(20rem / 16)/calc(28 / 20) var(--mono-font);
+	font: 700 calc(20rem / 16)/calc(28 / 20) var(--heading-font);
 	letter-spacing: .8px;
 }
 
@@ -230,13 +227,11 @@ article {
 /*Primary*/
 
 .btn.primary {
-	background: var(--blue);
-	border: 1px solid var(--blue);
-	border-radius: 4px;
+	background: var(--black);
+	border: 1px solid var(--black);
 	color: var(--white);
-	font: 600 calc(14rem / 16)/calc(18 / 14) var(--mono-font);
-	letter-spacing: .6px;
-	padding: 10px 18px;
+	font: 600 calc(16rem / 16)/calc(20 / 16) var(--body-font);
+	padding: 9px 15px 11px;
 }
 
 .btn.primary:hover {

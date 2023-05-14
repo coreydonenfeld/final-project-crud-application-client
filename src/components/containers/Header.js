@@ -4,7 +4,7 @@ Header.js
 It contains the Header component to be displayed on every page.
 The header contains navigation links to every other page.
 ================================================== */
-import * as Jazzy from '../jazzyui';
+import { Container, Button } from '../jazzyui';
 
 // Header component, displayed on every page
 // Links to every other page
@@ -26,17 +26,17 @@ const Header = () => {
 
     return (
         <header>
-            <Jazzy.Container>
+            <Container>
                 <ul className="flex">
                     {navigationItems.map((item, index) => {
                         return (
                             <li key={index}>
-                                <Jazzy.Button type="nav" text={item.text} link={item.link} />
+                                <Button type="nav" text={item.text} link={item.link} />
                             </li>
                         );
                     })}
                 </ul>
-            </Jazzy.Container>
+            </Container>
         </header>
     );
 }
