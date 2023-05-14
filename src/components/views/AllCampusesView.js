@@ -6,7 +6,7 @@ It constructs a React component to display all campuses.
 ================================================== */
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Container } from "../jazzy-ui";
+import { Button, Container } from '../jazzy-ui';
 
 const AllCampusesView = (props) => {
     // If there is no campus, display a message.
@@ -27,14 +27,11 @@ const AllCampusesView = (props) => {
                     <h4>campus id: {campus.id}</h4>
                     <p>{campus.address}</p>
                     <p>{campus.description}</p>
+                    <Button link={`/campus/${campus.id}`} type="primary">View Campus</Button>
                     <hr />
                 </div>
             ))}
-            <br />
-            <Link to={`/`}>
-                <button>Add New Campus</button>
-            </Link>
-            <br /><br />
+            <Button link={`/`} type="primary">Add New Campus</Button> 
         </Container>
     );
 };

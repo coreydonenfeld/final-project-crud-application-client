@@ -24,6 +24,18 @@ class Button extends Component {
         if (!title) {
             title = this.props.children;
         }
+
+        if (this.props.role === "button") {
+            return (
+                <button type="button" className={classes}>{title}</button>
+            );
+        }
+        if (this.props.role === "submit") {
+            return (
+                <button type="submit" className={classes}>{title}</button>
+            );
+        }
+        
         return (
             <Link to={this.props.link} className={classes}>{title}</Link>
         );

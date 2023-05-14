@@ -5,7 +5,7 @@ The Views component is responsible for rendering web page with data provided by 
 It constructs a React component to display the all students view page.
 ================================================== */
 import { Link } from "react-router-dom";
-import { Container } from "../jazzy-ui";
+import { Button, Container } from '../jazzy-ui';
 
 const AllStudentsView = (props) => {
     const { students, deleteStudent } = props;
@@ -33,17 +33,13 @@ const AllStudentsView = (props) => {
                         <Link to={`/student/${student.id}`}>
                             <h2>{name}</h2>
                         </Link>
-                        <button onClick={() => deleteStudent(student.id)}>Delete</button>
+                        <button className="btn primary" onClick={() => deleteStudent(student.id)}>Delete</button>
                         <hr />
                     </div>
                 );
             }
             )}
-            <br />
-            <Link to={`/newstudent`}>
-                <button>Add New Student</button>
-            </Link>
-            <br /><br />
+            <Button link={`/newstudent`} type="primary">Add New Student</Button>
         </Container>
     );
 };
