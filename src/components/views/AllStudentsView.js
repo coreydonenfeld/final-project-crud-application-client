@@ -5,24 +5,25 @@ The Views component is responsible for rendering web page with data provided by 
 It constructs a React component to display the all students view page.
 ================================================== */
 import { Link } from "react-router-dom";
+import { Container } from "../jazzy-ui";
 
 const AllStudentsView = (props) => {
     const { students, deleteStudent } = props;
     // If there is no student, display a message
     if (!students.length) {
         return (
-            <div>
+            <Container>
                 <p>There are no students.</p>
                 <Link to={`newstudent`}>
                     <button>Add New Student</button>
                 </Link>
-            </div>
+            </Container>
         );
     }
 
     // If there is at least one student, render All Students view 
     return (
-        <div>
+        <Container>
             <h1>All Students</h1>
 
             {students.map((student) => {
@@ -43,7 +44,7 @@ const AllStudentsView = (props) => {
                 <button>Add New Student</button>
             </Link>
             <br /><br />
-        </div>
+        </Container>
     );
 };
 

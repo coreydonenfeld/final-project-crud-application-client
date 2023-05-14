@@ -6,6 +6,7 @@ It constructs a React component to display all campuses.
 ================================================== */
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { Container } from "../jazzy-ui";
 
 const AllCampusesView = (props) => {
     // If there is no campus, display a message.
@@ -15,7 +16,7 @@ const AllCampusesView = (props) => {
 
     // If there is at least one campus, render All Campuses view 
     return (
-        <div>
+        <Container>
             <h1>All Campuses</h1>
 
             {props.allCampuses.map((campus) => (
@@ -34,7 +35,7 @@ const AllCampusesView = (props) => {
                 <button>Add New Campus</button>
             </Link>
             <br /><br />
-        </div>
+        </Container>
     );
 };
 

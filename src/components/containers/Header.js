@@ -4,7 +4,7 @@ Header.js
 It contains the Header component to be displayed on every page.
 The header contains navigation links to every other page.
 ================================================== */
-import { Container, Button } from '../jazzyui';
+import { Container, Button } from '../jazzy-ui';
 
 // Header component, displayed on every page
 // Links to every other page
