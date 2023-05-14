@@ -21,6 +21,9 @@ class Button extends Component {
         if (this.props.class) {
             classes += " " + this.props.class;
         }
+        if (!title) {
+            title = this.props.children;
+        }
         return (
             <Link to={this.props.link} className={classes}>{title}</Link>
         );
