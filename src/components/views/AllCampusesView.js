@@ -11,7 +11,12 @@ import CampusList from "../modules/CampusList";
 const AllCampusesView = ({ allCampuses }) => {
     // If there is no campus, display a message.
     if (!allCampuses.length) {
-        return <Container>There are no campuses. Loading!</Container>;
+        return (
+            <Container>
+                <h1>All Campuses <span className="count">({allCampuses.length})</span></h1>
+                <p>Loading campuses...</p>
+            </Container>
+        );
     }
 
     // If there is at least one campus, render All Campuses view 
@@ -19,7 +24,6 @@ const AllCampusesView = ({ allCampuses }) => {
         <Container>
             <h1>All Campuses <span className="count">({allCampuses.length})</span></h1>
             <CampusList campuses={allCampuses} />
-            
             <Button link={`/`} type="primary">Add New Campus</Button>
         </Container>
     );
