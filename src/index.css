@@ -156,7 +156,7 @@ article {
 	width: var(--container-width);
 }
 
-.flex-container {
+.flex {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
@@ -343,6 +343,10 @@ h1 .count {
     font: 600 calc(20rem / 16)/calc(20 / 20) var(--body-font);
 }
 
+h1 + .campus-list {
+    margin-top: 48px;
+}
+
 .campus-list {
     list-style: none;
     margin: 0;
@@ -388,6 +392,57 @@ h1 .count {
 
 .campus-item .description {
     margin-bottom: 18px;
+}
+
+.campus-item .description + .btn.secondary {
+    margin: 0;
+}
+
+.campus-item .btn.secondary {
+    margin: 20px 0 0;
+}
+
+
+.students-preview {
+    align-items: center;
+    gap: 0px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+}
+
+.students-preview ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.students-preview li {
+    width: 30px;
+}
+
+.students-preview li + li {
+    margin-left: -8px;
+}
+
+.students-preview .avatar {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    font-size: calc(12rem / 16);
+    line-height: calc(12 / 12);
+    font-weight: 500;
+    color: var(--white);
+    border: 1px solid #F2F2F2;
+}
+
+.students-preview ul + p {
+    margin-left: 8px;
+    font-weight: 500;
 }
 
 /***************************************************************************************************************************************************************************************/

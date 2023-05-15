@@ -27,22 +27,31 @@ const CampusList = ({ campuses }) => {
                         </Link>
                         <p className="address">{campus.address}</p>
                         <p className="description">{campus.description}</p>
-
-                        <p>{campus.students.length} students</p>
                         {
                             campus.students.length > 0 &&
-                            <div>
-                                <h3>Students</h3>
-                                <ul>
-                                    {campus.students.map((student) => (
-                                        <li key={student.id}>
-                                            <Link to={`/student/${student.id}`}>
-                                                <h4>{student.firstname} {student.lastname}</h4>
-                                            </Link>
-                                        </li>
-                                    ))}
+                            <aside className="flex students-preview">
+                                <ul className="flex">
+                                    {campus.students.map((student) => {
+                                        let Profile = <h4>{student.firstname.charAt(0)}{student.lastname.charAt(0)}</h4>;
+                                        if (student.imageUrl) {
+                                            Profile = <img src={student.imageUrl} alt={`${student.firstname} ${student.lastname}`} />;
+                                        }
+
+                                        // random dark hex color full opacity
+                                        const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+
+
+                                        return (
+                                            <li key={student.id}>
+                                                <Link className="avatar" to={`/student/${student.id}`} style={{ backgroundColor: randomColor }}>
+                                                    {Profile}
+                                                </Link>
+                                            </li>
+                                        );
+                                    })}
                                 </ul>
-                            </div>
+                                <p>{campus.students.length} students</p>
+                            </aside>
                         }
 
                         <Button link={`/campus/${campus.id}`} type="secondary">View Campus</Button>
