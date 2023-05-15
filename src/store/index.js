@@ -14,7 +14,7 @@ import * as reducers from './reducers';
 // Construct the Redux Store:
 // Create a single Root Reducer to combine all Reducers, so that the Redux Store state can 
 // access the states in all Reducers of the app.
-const rootReducer = combineReducers(reducers);  
+const rootReducer = combineReducers(reducers);
 // Create a logger middleware to log dispatched Actions in console,
 // so that it displays prevState, nextState, and Action when an Action is dispatched.
 const logger = createLogger({ collapsed: true });  // Collapse console messages when displayed
