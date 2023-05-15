@@ -8,9 +8,9 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Button, Container } from '../jazzy-ui';
 
-const AllCampusesView = (props) => {
+const AllCampusesView = ({ allCampuses }) => {
     // If there is no campus, display a message.
-    if (!props.allCampuses.length) {
+    if (!allCampuses.length) {
         return <div>There are no campuses.</div>;
     }
 
@@ -19,19 +19,41 @@ const AllCampusesView = (props) => {
         <Container>
             <h1>All Campuses</h1>
 
-            {props.allCampuses.map((campus) => (
-                <div key={campus.id}>
-                    <Link to={`/campus/${campus.id}`}>
-                        <h2>{campus.name}</h2>
-                    </Link>
-                    <h4>campus id: {campus.id}</h4>
-                    <p>{campus.address}</p>
-                    <p>{campus.description}</p>
-                    <Button link={`/campus/${campus.id}`} type="primary">View Campus</Button>
-                    <hr />
-                </div>
-            ))}
-            <Button link={`/`} type="primary">Add New Campus</Button> 
+            <ul className="grid">
+                {allCampuses.map((campus) => (
+                    <li key={campus.id}>
+
+                        {
+                            campus.imageUrl !== null &&
+                            <img src={campus.imageUrl} alt={campus.name} />
+                        }
+
+                        <Link to={`/campus/${campus.id}`}>
+                            <h2>{campus.name}</h2>
+                        </Link>
+                        <p>{campus.address}</p>
+                        <p>{campus.description}</p>
+                        <Button link={`/campus/${campus.id}`} type="secondary">View Campus</Button>
+
+                        {
+                            campus.students.length > 0 &&
+                            <div>
+                                <h3>Students</h3>
+                                <ul>
+                                    {campus.students.map((student) => (
+                                        <li key={student.id}>
+                                            <Link to={`/student/${student.id}`}>
+                                                <h4>{student.firstname} {student.lastname}</h4>
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        }
+                    </li>
+                ))}
+            </ul>
+            <Button link={`/`} type="primary">Add New Campus</Button>
         </Container>
     );
 };
