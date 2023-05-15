@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Button } from '../jazzy-ui';
+import { getRandomColors } from '../../utils';
 
 const CampusList = ({ campuses }) => {
     if (!campuses || !campuses.length) {
@@ -37,13 +38,11 @@ const CampusList = ({ campuses }) => {
                                             Profile = <img src={student.imageUrl} alt={`${student.firstname} ${student.lastname}`} />;
                                         }
 
-                                        // random dark hex color full opacity
-                                        const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-
+                                        const [ randomBackgroundColor, randomTextColor ] = getRandomColors();
 
                                         return (
                                             <li key={student.id}>
-                                                <Link className="avatar" to={`/student/${student.id}`} style={{ backgroundColor: randomColor }}>
+                                                <Link className="avatar" to={`/student/${student.id}`} style={{ backgroundColor: randomBackgroundColor, color: randomTextColor }}>
                                                     {Profile}
                                                 </Link>
                                             </li>
