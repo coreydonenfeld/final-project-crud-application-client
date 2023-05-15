@@ -24,7 +24,9 @@ class CampusContainer extends Component {
         return (
             <div>
                 <Header />
-                <CampusView campus={this.props.campus} />
+                <main>
+                    <CampusView campus={this.props.campus} />
+                </main>
             </div>
         );
     }

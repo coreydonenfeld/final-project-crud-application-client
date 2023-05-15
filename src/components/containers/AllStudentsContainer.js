@@ -28,10 +28,12 @@ class AllStudentsContainer extends Component {
         return (
             <div>
                 <Header />
-                <AllStudentsView
-                    students={this.props.allStudents}
-                    deleteStudent={this.props.deleteStudent}
-                />
+                <main>
+                    <AllStudentsView
+                        students={this.props.allStudents}
+                        deleteStudent={this.props.deleteStudent}
+                    />
+                </main>
             </div>
         )
     }
