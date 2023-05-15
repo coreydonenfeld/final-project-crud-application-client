@@ -13,7 +13,9 @@ const HomePageContainer = () => {
     return (
         <div>
             <Header />
-            <HomePageView />
+            <main>
+                <HomePageView />
+            </main>
         </div>
 
     );

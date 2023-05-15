@@ -5,33 +5,26 @@ The Views component is responsible for rendering web page with data provided by 
 It constructs a React component to display all campuses.
 ================================================== */
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { Button, Container } from '../jazzy-ui';
+import CampusList from "../modules/CampusList";
 
-const AllCampusesView = (props) => {
+const AllCampusesView = ({ allCampuses }) => {
     // If there is no campus, display a message.
-    if (!props.allCampuses.length) {
-        return <div>There are no campuses.</div>;
+    if (!allCampuses.length) {
+        return (
+            <Container>
+                <h1>All Campuses <span className="count">({allCampuses.length})</span></h1>
+                <p>Loading campuses...</p>
+            </Container>
+        );
     }
 
     // If there is at least one campus, render All Campuses view 
     return (
         <Container>
-            <h1>All Campuses</h1>
-
-            {props.allCampuses.map((campus) => (
-                <div key={campus.id}>
-                    <Link to={`/campus/${campus.id}`}>
-                        <h2>{campus.name}</h2>
-                    </Link>
-                    <h4>campus id: {campus.id}</h4>
-                    <p>{campus.address}</p>
-                    <p>{campus.description}</p>
-                    <Button link={`/campus/${campus.id}`} type="primary">View Campus</Button>
-                    <hr />
-                </div>
-            ))}
-            <Button link={`/`} type="primary">Add New Campus</Button> 
+            <h1>All Campuses <span className="count">({allCampuses.length})</span></h1>
+            <CampusList campuses={allCampuses} />
+            <Button link={`/`} type="primary">Add New Campus</Button>
         </Container>
     );
 };

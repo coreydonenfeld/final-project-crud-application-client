@@ -24,9 +24,11 @@ class AllCampusesContainer extends Component {
         return (
             <div>
                 <Header />
-                <AllCampusesView
-                    allCampuses={this.props.allCampuses}
-                />
+                <main>
+                    <AllCampusesView
+                        allCampuses={this.props.allCampuses}
+                    />
+                </main>
             </div>
         );
     }

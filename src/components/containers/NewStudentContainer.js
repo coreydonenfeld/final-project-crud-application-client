@@ -75,10 +75,12 @@ class NewStudentContainer extends Component {
         return (
             <div>
                 <Header />
-                <NewStudentView
-                    handleChange={this.handleChange}
-                    handleSubmit={this.handleSubmit}
-                />
+                <main>
+                    <NewStudentView
+                        handleChange={this.handleChange}
+                        handleSubmit={this.handleSubmit}
+                    />
+                </main>
             </div>
         );
     }
