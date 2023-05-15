@@ -2,9 +2,12 @@ import { Component } from "react";
 
 class Container extends Component {
     render() {
+        const { children, flex, variant } = this.props;
+        let className = flex ? "container flex" : "container";
+        className += variant ? ` ${variant}` : "";
         return (
-            <div className="container">
-                {this.props.children}
+            <div className={className}>
+                {children}
             </div>
         )
     }

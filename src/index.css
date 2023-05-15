@@ -156,6 +156,13 @@ article {
 	width: var(--container-width);
 }
 
+/* @todo Fix class name */
+.container.unbounded {
+    max-width: 100%;
+    padding: 0 40px;
+    width: 100%;
+}
+
 .flex {
 	display: flex;
 	flex-wrap: wrap;
@@ -217,7 +224,9 @@ article {
 /***Buttons***/
 
 .btn {
+    color: var(--black);
 	display: inline-block;
+    font-weight: 500;
 }
 
 .btn:hover {
@@ -331,6 +340,44 @@ input[type=password]::placeholder,
 select::placeholder,
 textarea::placeholder {
 	opacity: 1;
+}
+
+/***************************************************************************************************************************************************************************************/
+
+/*HEADER STYLES*/
+
+/***************************************************************************************************************************************************************************************/
+
+header {
+    
+}
+
+header .container.unbounded {
+    padding-right: 0;
+}
+
+header .container > .btn {
+    font-weight: 500;
+}
+
+header .flex {
+    align-items: center;
+    justify-content: space-between;
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 20px 40px;
+    background: #EEE;
+}
+
+header nav ul li + li {
+    margin-left: 20px;
+}
+
+header .btn.nav {
+    font-weight: 400;
 }
 
 /***************************************************************************************************************************************************************************************/
