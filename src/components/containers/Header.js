@@ -12,30 +12,46 @@ const Header = () => {
     const navigationItems = [
         {
             text: 'Home',
-            link: '/'
+            link: '/',
+            type: 'nav'
         },
         {
             text: 'Campuses',
-            link: '/campuses'
+            link: '/campuses',
+            type: 'nav'
         },
         {
             text: 'Students',
-            link: '/students'
+            link: '/students',
+            type: 'nav'
+        },
+        {
+            text: 'Add Campus',
+            link: '/newcampus',
+            type: 'button'
+        },
+        {
+            text: 'Add Student',
+            link: '/newstudent',
+            type: 'button'
         }
     ];
 
     return (
         <header>
-            <Container>
-                <ul className="flex">
-                    {navigationItems.map((item, index) => {
-                        return (
-                            <li key={index}>
-                                <Button type="nav" text={item.text} link={item.link} />
-                            </li>
-                        );
-                    })}
-                </ul>
+            <Container flex variant="unbounded">
+                <Button link="/">Campus Learning Labs</Button>
+                <nav>
+                    <ul className="flex">
+                        {navigationItems.map((item, index) => {
+                            return (
+                                <li key={index}>
+                                    <Button type={item.type} text={item.text} link={item.link} />
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </nav>
             </Container>
         </header>
     );
