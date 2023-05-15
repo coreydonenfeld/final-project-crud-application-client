@@ -13,7 +13,7 @@ const AllCampusesView = ({ allCampuses }) => {
     if (!allCampuses.length) {
         return (
             <Container>
-                <h1>All Campuses <span className="count">({allCampuses.length})</span></h1>
+                <h1 class="heading-2">All Campuses <span className="count">({allCampuses.length})</span></h1>
                 <p>Loading campuses...</p>
             </Container>
         );
@@ -22,7 +22,7 @@ const AllCampusesView = ({ allCampuses }) => {
     // If there is at least one campus, render All Campuses view 
     return (
         <Container>
-            <h1>All Campuses <span className="count">({allCampuses.length})</span></h1>
+            <h1 class="heading-2">All Campuses <span className="count">({allCampuses.length})</span></h1>
             <CampusList campuses={allCampuses} />
             <Button link={`/`} type="primary">Add New Campus</Button>
         </Container>
