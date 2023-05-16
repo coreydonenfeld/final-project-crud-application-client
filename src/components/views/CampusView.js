@@ -23,20 +23,24 @@ const CampusView = (props) => {
 
     // Render a single Campus view with list of its students
     return (
-        <Container grid>
-            <div className="content-wrapper">
-                <Button link="/campuses" type="secondary go-back">Back to Campuses</Button>
-                <h1 className="heading-xl">{campus.name}</h1>
-                <p className="medium large">{campus.address}</p>
-                <p className="large">{campus.description}</p>
+        <>
+            <Container grid>
+                <div className="content-wrapper">
+                    <Button link="/campuses" type="secondary go-back">Back to Campuses</Button>
+                    <h1 className="heading-xl">{campus.name}</h1>
+                    <p className="medium large">{campus.address}</p>
+                    <p className="large">{campus.description}</p>
 
-                {/* ADD EDIT and delete buttons */}
-                <div className="actions flex">
-                    <p>Quick Actions</p>
-                    <Button link={`/campus/${campus.id}/edit`} type="secondary edit">Edit Campus</Button>
-                    <Button link={`/campus/${campus.id}/delete`} type="secondary delete">Delete</Button>
+                    {/* ADD EDIT and delete buttons */}
+                    <div className="actions flex">
+                        <p>Quick Actions</p>
+                        <Button link={`/campus/${campus.id}/edit`} type="secondary edit">Edit Campus</Button>
+                        <Button link={`/campus/${campus.id}/delete`} type="secondary delete">Delete</Button>
+                    </div>
                 </div>
-
+                {Image}
+            </Container>
+            <Container>
                 <aside className="students-list">
                     <h2>Students <span className="count">({campus.students.length})</span></h2>
                     {
@@ -75,10 +79,13 @@ const CampusView = (props) => {
                             );
                         })}
                     </ul>
+                    <div className="add-new-student">
+                        <p>Want to add a new student to {campus.name}?</p>
+                        <Button link={`/newstudent/?campus=${campus.id}`} type="primary">Add New Student</Button>
+                    </div>
                 </aside>
-            </div>
-            {Image}
-        </Container>
+            </Container>
+        </>
     );
 };
 

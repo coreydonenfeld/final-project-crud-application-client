@@ -500,8 +500,8 @@ h1 + .campus-list {
 }
 
 .student-profile a {
-    display: flex;
     align-items: center;
+    display: flex;
 }
 
 .student-profile a p {
@@ -533,8 +533,8 @@ h1 + .campus-list {
 
 .student-profile .avatar + p {
     color: var(--black);
-    margin: 0 0 0 6px;
     font-weight: 500;
+    margin: 0 0 0 6px;
 }
 
 .students-preview ul + p {
@@ -553,10 +553,11 @@ main.campus {
 }
 
 .campus .image-wrapper {
-    grid-column: span 7;
     aspect-ratio: 4/3;
-    overflow: hidden;
+    grid-column: span 7;
+    height: 100%;
     margin-right: calc(var(--viewport-edge) + var(--gap));
+    overflow: hidden;
 }
 
 .campus .image-wrapper img {
@@ -566,12 +567,11 @@ main.campus {
 }
 
 .campus .content-wrapper {
-    grid-column: span 5;
-    padding-top: 10px;
-    padding-right: var(--gap);
-    position: relative;
     display: flex;
     flex-direction: column;
+    grid-column: span 5;
+    padding: 10px var(--gap) 200px 0;
+    position: relative;
 }
 
 .campus .content-wrapper .go-back {
@@ -586,13 +586,39 @@ main.campus {
     margin: 0 0 24px;
 }
 
+.campus .content-wrapper > .actions {
+    align-items: center;
+    background: var(--black);
+    margin: 40px 0 0;
+    padding: 15px 20px;
+}
+
+.campus .content-wrapper > .actions p {
+    color: var(--white);
+    margin: 0 auto 0 0;
+}
+
+.campus .content-wrapper > .actions .btn.primary {
+    background: var(--white);
+    border-color: transparent;
+    color: var(--black);
+}
+
+.campus .content-wrapper > .actions .btn.secondary {
+    color: var(--white);
+}
+
+.campus .content-wrapper > .actions .btn.secondary.delete {
+    color: var(--red);
+    margin-left: 20px;
+}
+
 .students-list {
-    margin: 80px 0 0;
-    height: 100%;
     background: var(--light-gray);
+    height: 100%;
+    margin: -100px 0 0;
     margin-left: calc(var(--viewport-edge));
-    margin-right: calc((var(--gap) * -2) + (var(--container-width) * -3/12));
-    padding: 60px calc(var(--viewport-edge) * -1);
+    padding: 60px 60px 60px calc(var(--viewport-edge) * -1);
 }
 
 .students-list h2 {
@@ -600,19 +626,19 @@ main.campus {
 }
 
 .students-list ul {
+    justify-content: flex-start;
     list-style: none;
     margin: 0;
     padding: 0;
-    justify-content: flex-start;
 }
 
 .students-list .student-profile {
-    grid-column: span 6;
+    align-items: center;
+    background: var(--gray);
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    grid-column: span 4;
     padding: 20px;
-    background: var(--gray);
 }
 
 .students-list .student-profile .avatar {
@@ -630,57 +656,30 @@ main.campus {
 }
 
 .students-list .student-profile .gpa {
-    padding-left: 10px;
     margin: 0;
+    padding-left: 10px;
 }
 
 .students-list .student-profile .actions {
+    justify-content: flex-start;
     margin: 20px 0 0;
     width: 100%;
-    justify-content: flex-start;
 }
 
 .students-list .student-profile .actions .btn.primary {
+    justify-content: center;
     /* width: 100%; */
     text-align: center;
-    justify-content: center;
     /* margin-bottom: 15px; */
 }
 
 .students-list .student-profile .edit + .delete {
-    margin-left: 15px;
     color: var(--red);
+    margin-left: 15px;
 }
 
 .students-list .student-profile .edit {
     margin-left: auto;
-}
-
-.campus .content-wrapper > .actions {
-    background: var(--black);
-    padding: 15px 20px;
-    align-items: center;
-    margin: 40px 0 0;
-}
-
-.campus .content-wrapper > .actions p {
-    margin: 0 auto 0 0;
-    color: var(--white);
-}
-
-.campus .content-wrapper > .actions .btn.primary {
-    background: var(--white);
-    border-color: transparent;
-    color: var(--black);
-}
-
-.campus .content-wrapper > .actions .btn.secondary {
-    color: var(--white);
-}
-
-.campus .content-wrapper > .actions .btn.secondary.delete {
-    color: var(--red);
-    margin-left: 20px;
 }
 
 /***************************************************************************************************************************************************************************************/
