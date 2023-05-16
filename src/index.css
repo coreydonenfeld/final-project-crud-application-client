@@ -563,7 +563,7 @@ main.campus {
 
 .campus .content-wrapper {
     grid-column: span 5;
-    padding-top: 20px;
+    padding-top: 10px;
     padding-right: var(--gap);
     position: relative;
     display: flex;
@@ -571,7 +571,7 @@ main.campus {
 }
 
 .campus .content-wrapper .go-back {
-    margin: 0 0 40px;
+    margin: 0 0 60px calc(var(--container-outer-margin) * -1);
 }
 
 .campus .content-wrapper > p {
