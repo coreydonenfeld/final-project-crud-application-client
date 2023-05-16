@@ -518,14 +518,17 @@ h1 + .campus-list {
     border-radius: 50%;
     color: var(--white);
     display: flex;
-    font-size: calc(12rem / 16);
     font-weight: 500;
     height: 30px;
     justify-content: center;
-    line-height: calc(12 / 12);
     overflow: hidden;
     text-align: center;
     width: 30px;
+}
+
+.student-profile .avatar p {
+    font-size: calc(12rem / 16);
+    line-height: calc(12 / 12);
 }
 
 .student-profile .avatar + p {
