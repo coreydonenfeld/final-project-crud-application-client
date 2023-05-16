@@ -25,6 +25,7 @@ const CampusView = (props) => {
     return (
         <Container grid>
             <div className="content-wrapper">
+                <Button link="/campuses" type="secondary go-back">Back to Campuses</Button>
                 <h1 className="heading-xl">{campus.name}</h1>
                 <p className="medium large">{campus.address}</p>
                 <p className="large">{campus.description}</p>

@@ -291,6 +291,12 @@ article {
 	color: var(--black);
 }
 
+.btn.secondary.go-back::before {
+    content: '←';
+    display: inline-block;
+    margin-right: 8px;
+}
+
 /***Form Styles***/
 
 form {
@@ -557,11 +563,15 @@ main.campus {
 
 .campus .content-wrapper {
     grid-column: span 5;
-    padding-top: 60px;
+    padding-top: 20px;
     padding-right: var(--gap);
     position: relative;
     display: flex;
     flex-direction: column;
+}
+
+.campus .content-wrapper .go-back {
+    margin: 0 0 40px;
 }
 
 .campus .content-wrapper > p {
