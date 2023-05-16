@@ -132,7 +132,8 @@ h6,
 p,
 ul,
 ol {
-	
+	font-size: calc(16rem / 16);
+    line-height: calc(26 / 16);
 }
 
 p.large,
