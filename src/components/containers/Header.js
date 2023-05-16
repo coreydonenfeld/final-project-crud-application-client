@@ -28,12 +28,12 @@ const Header = () => {
         {
             text: 'Add Campus',
             link: '/newcampus',
-            type: 'button'
+            type: 'secondary'
         },
         {
             text: 'Add Student',
             link: '/newstudent',
-            type: 'button'
+            type: 'secondary'
         }
     ];
 

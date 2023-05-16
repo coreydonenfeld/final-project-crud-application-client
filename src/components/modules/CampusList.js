@@ -33,7 +33,7 @@ const CampusList = ({ campuses }) => {
                             <aside className="flex students-preview">
                                 <ul className="flex">
                                     {campus.students.map((student) => {
-                                        let Profile = <h4>{student.firstname.charAt(0)}{student.lastname.charAt(0)}</h4>;
+                                        let Profile = <p>{student.firstname.charAt(0)}{student.lastname.charAt(0)}</p>;
                                         if (student.imageUrl) {
                                             Profile = <img src={student.imageUrl} alt={`${student.firstname} ${student.lastname}`} />;
                                         }
@@ -41,9 +41,11 @@ const CampusList = ({ campuses }) => {
                                         const [ randomBackgroundColor, randomTextColor ] = getRandomColors();
 
                                         return (
-                                            <li key={student.id}>
-                                                <Link className="avatar" to={`/student/${student.id}`} style={{ backgroundColor: randomBackgroundColor, color: randomTextColor }}>
-                                                    {Profile}
+                                            <li className="student-profile" key={student.id}>
+                                                <Link to={`/student/${student.id}`}>
+                                                    <div className="avatar" style={{ backgroundColor: randomBackgroundColor, color: randomTextColor }}>
+                                                        {Profile}
+                                                    </div>
                                                 </Link>
                                             </li>
                                         );
