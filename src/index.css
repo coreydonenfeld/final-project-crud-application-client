@@ -652,6 +652,33 @@ main.campus {
     margin-left: auto;
 }
 
+.campus .content-wrapper > .actions {
+    background: var(--black);
+    padding: 15px 20px;
+    align-items: center;
+    margin: 40px 0 0;
+}
+
+.campus .content-wrapper > .actions p {
+    margin: 0 auto 0 0;
+    color: var(--white);
+}
+
+.campus .content-wrapper > .actions .btn.primary {
+    background: var(--white);
+    border-color: transparent;
+    color: var(--black);
+}
+
+.campus .content-wrapper > .actions .btn.secondary {
+    color: var(--white);
+}
+
+.campus .content-wrapper > .actions .btn.secondary.delete {
+    color: var(--red);
+    margin-left: 20px;
+}
+
 /***************************************************************************************************************************************************************************************/
 
 /*MQ MIN-WIDTH 1778 (1778 is when the container width is ~1600)*/

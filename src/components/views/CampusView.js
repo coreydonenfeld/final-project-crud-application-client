@@ -30,6 +30,13 @@ const CampusView = (props) => {
                 <p className="medium large">{campus.address}</p>
                 <p className="large">{campus.description}</p>
 
+                {/* ADD EDIT and delete buttons */}
+                <div className="actions flex">
+                    <p>Quick Actions</p>
+                    <Button link={`/campus/${campus.id}/edit`} type="secondary edit">Edit Campus</Button>
+                    <Button link={`/campus/${campus.id}/delete`} type="secondary delete">Delete</Button>
+                </div>
+
                 <aside className="students-list">
                     <h2>Students <span className="count">({campus.students.length})</span></h2>
                     {
