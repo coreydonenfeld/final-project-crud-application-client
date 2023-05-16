@@ -556,8 +556,9 @@ main.campus {
     aspect-ratio: 4/3;
     grid-column: span 7;
     height: 100%;
-    margin-right: calc(var(--viewport-edge) + var(--gap));
+    margin-right: calc(var(--viewport-edge));
     overflow: hidden;
+    width: calc(100% - var(--viewport-edge));
 }
 
 .campus .image-wrapper img {
@@ -616,7 +617,7 @@ main.campus {
 .students-list {
     background: var(--light-gray);
     height: 100%;
-    margin: -100px 0 0;
+    margin: -100px 0 80px;
     margin-left: calc(var(--viewport-edge));
     padding: 60px 60px 60px calc(var(--viewport-edge) * -1);
 }
@@ -668,9 +669,7 @@ main.campus {
 
 .students-list .student-profile .actions .btn.primary {
     justify-content: center;
-    /* width: 100%; */
     text-align: center;
-    /* margin-bottom: 15px; */
 }
 
 .students-list .student-profile .edit + .delete {
@@ -680,6 +679,24 @@ main.campus {
 
 .students-list .student-profile .edit {
     margin-left: auto;
+}
+
+.students-list ul:empty + .add-new-student {
+    margin-top: -10px;
+}
+
+.students-list .add-new-student {
+    align-items: center;
+    justify-content: flex-start;
+    margin: 40px 0 0;
+}
+
+.students-list .add-new-student p {
+    margin: 0;
+}
+
+.students-list .add-new-student .btn.secondary {
+    margin: 0 0 0 10px;
 }
 
 /***************************************************************************************************************************************************************************************/
