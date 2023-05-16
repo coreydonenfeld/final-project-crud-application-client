@@ -5,7 +5,7 @@ The Views component is responsible for rendering web page with data provided by 
 It constructs a React component to display a single campus and its students (if any).
 ================================================== */
 import { Link } from "react-router-dom";
-import { Container } from "../jazzy-ui";
+import { Container, Button } from "../jazzy-ui";
 import { getRandomColors } from '../../utils';
 
 // Take in props data to construct the component
@@ -15,55 +15,61 @@ const CampusView = (props) => {
     let Image = null;
     if (campus.imageUrl !== null) {
         Image = (
-            <Link to={`/campus/${campus.id}`} className="image-wrapper">
+            <div className="image-wrapper">
                 <img src={campus.imageUrl} alt={campus.name} />
-            </Link>
+            </div>
         );
     }
 
     // Render a single Campus view with list of its students
     return (
-        <Container>
+        <Container grid>
+            <div className="content-wrapper">
+                <h1 className="heading-xl">{campus.name}</h1>
+                <p className="medium large">{campus.address}</p>
+                <p className="large">{campus.description}</p>
+
+                <aside className="students-list">
+                    <h2>Students <span className="count">({campus.students.length})</span></h2>
+                    {
+                        campus.students.length === 0 &&
+                        <p>There are no students enrolled in this campus.</p>
+                    }
+                    <ul className="grid">
+                        {campus.students.map((student) => {
+                            let Profile = <p>{student.firstname.charAt(0)}{student.lastname.charAt(0)}</p>;
+                            if (student.imageUrl) {
+                                Profile = <img src={student.imageUrl} alt={`${student.firstname} ${student.lastname}`} />;
+                            }
+                            let name = student.firstname + " " + student.lastname;
+
+                            const [randomBackgroundColor, randomTextColor] = getRandomColors();
+
+                            return (
+                                <li className="student-profile" key={student.id}>
+                                    <Link to={`/student/${student.id}`}>
+                                        <div className="avatar" style={{ backgroundColor: randomBackgroundColor, color: randomTextColor }}>
+                                            {Profile}
+                                        </div>
+                                        <p>{name}</p>
+                                    </Link>
+                                    <p className="email">{student.email}</p>
+                                    {
+                                        student.gpa > 0 &&
+                                        <p className="gpa">{student.gpa} GPA</p>
+                                    }
+                                    <div className="actions flex">
+                                        <Button link={`/student/${student.id}`} type="primary">View Student</Button>
+                                        <Button link={`/student/${student.id}/edit`} type="secondary" class="edit">Edit</Button>
+                                        <Button link={`/student/${student.id}/delete`} type="secondary" class="delete">Delete</Button>
+                                    </div>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </aside>
+            </div>
             {Image}
-            
-            <h1 class="heading-xl">{campus.name}</h1>
-            <p>{campus.address}</p>
-            <p>{campus.description}</p>
-            {campus.students.map(student => {
-                let name = student.firstname + " " + student.lastname;
-                return (
-                    <div key={student.id}>
-                        <Link to={`/student/${student.id}`}>
-                            <h2>{name}</h2>
-                        </Link>
-                    </div>
-                );
-            })}
-
-            {
-            campus.students.length > 0 &&
-            <aside className="flex students-preview">
-                <ul className="flex">
-                    {campus.students.map((student) => {
-                        let Profile = <h4>{student.firstname.charAt(0)}{student.lastname.charAt(0)}</h4>;
-                        if (student.imageUrl) {
-                            Profile = <img src={student.imageUrl} alt={`${student.firstname} ${student.lastname}`} />;
-                        }
-
-                        const [ randomBackgroundColor, randomTextColor ] = getRandomColors();
-
-                        return (
-                            <li key={student.id}>
-                                <Link className="avatar" to={`/student/${student.id}`} style={{ backgroundColor: randomBackgroundColor, color: randomTextColor }}>
-                                    {Profile}
-                                </Link>
-                            </li>
-                        );
-                    })}
-                </ul>
-                <p>{campus.students.length} students</p>
-            </aside>
-            }
         </Container>
     );
 };
