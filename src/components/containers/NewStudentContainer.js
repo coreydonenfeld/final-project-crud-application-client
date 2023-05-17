@@ -5,13 +5,13 @@ The Container component is responsible for stateful logic and data fetching, and
 passes data (if any) as props to the corresponding View component.
 If needed, it also defines the component's "connect" function.
 ================================================== */
-import Header from './Header';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
-
-import NewStudentView from '../views/NewStudentView';
 import { addStudentThunk, fetchAllCampusesThunk } from '../../store/thunks';
+
+import Header from './Header';
+import NewStudentView from '../views/NewStudentView';
 
 class NewStudentContainer extends Component {
     // Initialize state
