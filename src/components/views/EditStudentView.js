@@ -5,7 +5,7 @@ The Views component is responsible for rendering web page with data provided by 
 It constructs a React component to display the new student page.
 ================================================== */
 import { Button, Container } from '../jazzy-ui';
-import AsyncSelect from 'react-select/async';
+import Select from 'react-select';
 
 const SelectStyles = {
     control: (baseStyles, state) => ({
@@ -65,21 +65,32 @@ const SelectStyles = {
 };
 
 function EditStudentView(props) {
-    const { handleChange, handleSelectChange, handleSubmit, getCampusesForSelect, student } = props;
+    const { handleChange, handleSelectChange, handleSubmit, student, campuses } = props;
+    const { campusId, firstname, lastname, email, gpa, imageUrl } = props;
 
-    console.log('student:', student)
+    let selectedCampus = null;
+    let campusesOptions = campuses.map((campus) => {
+        return {
+            value: campus.id,
+            label: campus.name,
+        };
+    });
 
-    let defaultCampus = null;
-
-    if (student.campus.name) {
-        console.log('student.campus.name:', student.campus.name)
-        defaultCampus = {
+    // find campus that matches campusId
+    if (campusId) {
+        selectedCampus = campusesOptions.find((campus) => {
+            return campus.value === campusId;
+        });
+    } else {
+        selectedCampus = {
             value: student.campus.id,
             label: student.campus.name,
-        };
+        }
     }
 
-    console.log('props!', props);
+    if (selectedCampus.value === undefined) {
+        selectedCampus = null;
+    }
 
     // Render a New Student view with an input form
     return (
@@ -90,41 +101,39 @@ function EditStudentView(props) {
 
                 <div className="form-input-wrapper">
                     <label>First Name <span className="required">(required)</span></label>
-                    <input type="text" name="firstname" defaultValue={student.firstname || ""} onChange={(e) => handleChange(e)} />
+                    <input type="text" name="firstname" value={firstname} onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="form-input-wrapper">
                     <label>Last Name <span className="required">(required)</span></label>
-                    <input type="text" name="lastname" defaultValue={student.lastname || ""} onChange={(e) => handleChange(e)} />
+                    <input type="text" name="lastname" value={lastname} onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="form-input-wrapper">
                     <label>Campus <span className="required">(required)</span></label>
-                    <AsyncSelect
+                    <Select
                         name="campusId"
-                        cacheOptions
-                        defaultOptions
-                        loadOptions={getCampusesForSelect}
+                        options={campusesOptions}
                         onChange={(e) => handleSelectChange(e, 'campusId')}
                         placeholder="Select a campus"
-                        defaultValue={defaultCampus}
+                        value={selectedCampus}
                         styles={SelectStyles}
                     />
                 </div>
 
                 <div className="form-input-wrapper">
                     <label>Email <span className="required">(required)</span></label>
-                    <input type="email" name="email" defaultValue={student.email || ""} onChange={(e) => handleChange(e)} />
+                    <input type="email" name="email" value={email} onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="form-input-wrapper">
                     <label>GPA</label>
-                    <input type="number" min="0" max="4" step=".1" name="gpa" defaultValue={student.gpa || null} onChange={(e) => handleChange(e)} />
+                    <input type="number" min="0" max="4" step=".1" name="gpa" value={gpa} onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="form-input-wrapper">
                     <label>Image URL</label>
-                    <input type="url" name="imageUrl" defaultValue={student.imageUrl || ""} onChange={(e) => handleChange(e)} />
+                    <input type="url" name="imageUrl" value={imageUrl} onChange={(e) => handleChange(e)} />
                 </div>
 
                 <Button role="submit" type="primary">Update</Button>

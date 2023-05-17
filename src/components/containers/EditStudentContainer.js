@@ -14,16 +14,17 @@ import Header from './Header';
 import { EditStudentView } from '../views';
 
 class EditStudentContainer extends Component {
+
     // Initialize state
     constructor(props) {
         super(props);
         this.state = {
-            studentId: this.props.match.params.id,
+            studentId: this.props.match.params.id || null,
             firstname: "",
             lastname: "",
-            campusId: null,
+            campusId: "",
             email: "",
-            gpa: null,
+            gpa: "",
             imageUrl: "",
             redirect: false,
             redirectId: null,
@@ -32,9 +33,19 @@ class EditStudentContainer extends Component {
     }
 
     // Fetch student data when component mounts
-    componentDidMount() {
-        this.props.fetchAllCampuses();
-        this.props.fetchStudent(this.props.match.params.id);
+    async componentDidMount() {
+        await this.props.fetchAllCampuses();
+        await this.props.fetchStudent(this.props.match.params.id);
+
+        this.setState({
+            studentId: this.props.student.id,
+            firstname: this.props.student.firstname,
+            lastname: this.props.student.lastname,
+            campusId: this.props.student.campusId,
+            email: this.props.student.email,
+            gpa: this.props.student.gpa || "",
+            imageUrl: this.props.student.imageUrl || "",
+        });
     }
 
     // Capture input data when it is entered
@@ -43,10 +54,12 @@ class EditStudentContainer extends Component {
         this.setState({
             [event.target.name]: event.target.value
         });
+        console.log('handle change: ' ,this.state);
     }
 
     // Capture selected campus when it is selected
     handleSelectChange = (selectedOption, name) => {
+        console.log('selectedOption: ', selectedOption);
         this.setState({
             [name]: selectedOption.value
         });
@@ -227,8 +240,15 @@ class EditStudentContainer extends Component {
                         handleSelectChange={this.handleSelectChange}
                         handleSubmit={this.handleSubmit}
                         getCampusesForSelect={this.getCampusesForSelect}
-                        allCampuses={this.props.allCampuses}
                         student={this.props.student}
+                        campuses={this.props.allCampuses}
+
+                        campusId={this.state.campusId}
+                        firstname={this.state.firstname}
+                        lastname={this.state.lastname}
+                        email={this.state.email}
+                        gpa={this.state.gpa}
+                        imageUrl={this.state.imageUrl }
                     />
                 </main>
             </div>
