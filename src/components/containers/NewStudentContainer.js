@@ -147,9 +147,14 @@ class NewStudentContainer extends Component {
                     if (typeof gpa === 'undefined') return true;  // allow empty string (no GPA)
                     return gpa >= 0 && gpa <= 4;
                 }
+            },
+            {
+                field: 'imageUrl',
+                message: 'Please enter a valid URL.',
             }
         ];
         this.clearErrorNotices();
+
         let isValid = true;
         errors.forEach(error => {
             if (error.validation === 'required' && !this.state[error.field]) {
@@ -159,12 +164,17 @@ class NewStudentContainer extends Component {
                 this.addErrorNotice(error.message, error.field);
                 isValid = false;
             }
+
+            // check that it is not greater than 255 characters
+            if (this.state[error.field] && this.state[error.field].length > 255) {
+                this.addErrorNotice('Please enter a value less than 255 characters.', error.field);
+                isValid = false;
+            }
         });
 
         if (!isValid) {
             return;
         }
-
 
         let student = {
             firstname: this.state.firstname,
