@@ -70,9 +70,9 @@ function NewStudentView(props) {
 
     // Render a New Student view with an input form
     return (
-        <Container>
-            <h1 className="heading-xl">Add Student</h1>
-            <form onSubmit={(e) => handleSubmit(e)}>
+        <Container grid>
+            <h1 className="heading-2">Add Student</h1>
+            <form onSubmit={(e) => handleSubmit(e)} className="grid add-student">
                 <div className="form-input-wrapper">
                     <label>First Name</label>
                     <input type="text" name="firstname" required onChange={(e) => handleChange(e)} />

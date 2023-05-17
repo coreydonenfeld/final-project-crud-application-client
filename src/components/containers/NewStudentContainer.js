@@ -20,7 +20,7 @@ class NewStudentContainer extends Component {
         this.state = {
             firstname: "",
             lastname: "",
-            campusId: null,
+            campusId: this.props.match.params.id,
             imageUrl: "",
             email: "",
             redirect: false,
@@ -50,14 +50,13 @@ class NewStudentContainer extends Component {
 
     getCampusesForSelect = async (input) => {
         await this.props.fetchAllCampuses();
-        
         let campuses = this.props.allCampuses;
 
         // map campuses to an array of objects with label and value
         campuses = campuses.map(campus => {
             return {
                 label: campus.name,
-                value: campus.id
+                value: campus.id,
             };
         });
 
@@ -116,13 +115,14 @@ class NewStudentContainer extends Component {
         return (
             <div>
                 <Header />
-                <main>
+                <main className="new-student">
                     <NewStudentView
                         handleChange={this.handleChange}
                         handleSelectChange={this.handleSelectChange}
                         handleSubmit={this.handleSubmit}
                         getCampusesForSelect={this.getCampusesForSelect}
                         allCampuses={this.props.allCampuses}
+                        campusId={this.props.campusId}
                     />
                 </main>
             </div>
