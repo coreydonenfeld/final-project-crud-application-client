@@ -26,17 +26,9 @@ const CampusView = (props) => {
         <>
             <Container grid>
                 <div className="content-wrapper">
-                    <Button link="/campuses" type="secondary go-back">Back to Campuses</Button>
                     <h1 className="heading-xl">{campus.name}</h1>
                     <p className="medium large">{campus.address}</p>
                     <p className="large">{campus.description}</p>
-
-                    {/* ADD EDIT and delete buttons */}
-                    <div className="actions flex">
-                        <p>Quick Actions</p>
-                        <Button link={`/campus/${campus.id}/edit`} type="secondary edit">Edit Campus</Button>
-                        <Button link={`/campus/${campus.id}/delete`} type="secondary delete">Delete</Button>
-                    </div>
                 </div>
                 {Image}
             </Container>
@@ -85,6 +77,12 @@ const CampusView = (props) => {
                     </div>
                 </aside>
             </Container>
+            <div className="actions quick-actions-campus flex">
+                <p className="heading-5">Quick Actions</p>
+                <Button link="/campuses" type="secondary go-back">Back to Campuses</Button>
+                <Button link={`/campus/${campus.id}/edit`} type="secondary edit">Edit Campus</Button>
+                <Button link={`/campus/${campus.id}/delete`} type="secondary delete">Delete</Button>
+            </div>
         </>
     );
 };

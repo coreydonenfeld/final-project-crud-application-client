@@ -16,6 +16,7 @@
   	--white: #FFFFFF;
     --light-gray: #F2F2F2;
     --gray: #E5E5E5;
+    --medium-gray: #b1b1b1;
     --dark-gray: #333333;
     --red: #FF0000;
     --black: #000000;
@@ -121,13 +122,12 @@ h4,
 
 h5,
 .heading-5 {
-	/* font: 700 calc(20rem / 16)/calc(28 / 20) var(--heading-font);
-	letter-spacing: .8px; */
+	font: 400 calc(24rem / 16)/calc(24 / 24) var(--heading-font);
 }
 
 h6,
 .heading-6 {
-	
+	/* font: 400 calc(24rem / 16)/calc(24 / 24) var(--heading-font); */
 }
 
 p,
@@ -150,12 +150,17 @@ ol.medium {
     font-weight: 500;
 }
 
-.eyebrow,
-label {
+.eyebrow {
 	display: block;
 	font: 600 calc(14rem / 16)/calc(18 / 14) var(--body-font);
 	letter-spacing: 1.5px;
 	text-transform: uppercase;
+}
+
+label {
+    display: block;
+    font: 500 calc(16rem / 16)/calc(26 / 16) var(--body-font);
+    letter-spacing: .2px;
 }
 
 header, 
@@ -329,7 +334,7 @@ select,
 textarea {
 	appearance: none;
 	background: var(--white);
-	border: 1px solid var(--dark-gray);
+	border: 1px solid var(--medium-gray);
 	outline: none;
 	padding: 8px 12px;
 }
@@ -342,7 +347,7 @@ input[type=password]:hover,
 input[type=url]:hover,
 select:hover,
 textarea:hover {
-	border-color: var(--black);
+	border-color: var(--dark-gray);
 }
 
 input[type=email]:focus,
@@ -398,7 +403,7 @@ header nav ul {
 }
 
 header nav ul li + li {
-    margin-left: 20px;
+    margin-left: 25px;
 }
 
 header .btn.nav {
@@ -569,9 +574,9 @@ main.campus {
     aspect-ratio: 4/3;
     grid-column: span 7;
     height: 100%;
-    margin-right: calc(var(--viewport-edge));
+    margin-right: calc(var(--viewport-edge) + var(--gap));
     overflow: hidden;
-    width: calc(100% - var(--viewport-edge));
+    width: calc(100% - var(--viewport-edge) - var(--gap));
 }
 
 .campus .image-wrapper img {
@@ -584,12 +589,8 @@ main.campus {
     display: flex;
     flex-direction: column;
     grid-column: span 5;
-    padding: 10px var(--gap) 200px 0;
+    padding: 80px var(--gap) 200px 0;
     position: relative;
-}
-
-.campus .content-wrapper .go-back {
-    margin: 0 0 60px calc(var(--container-outer-margin) * -1);
 }
 
 .campus .content-wrapper > p {
@@ -600,43 +601,17 @@ main.campus {
     margin: 0 0 24px;
 }
 
-.campus .content-wrapper > .actions {
-    align-items: center;
-    background: var(--black);
-    margin: 40px 0 0;
-    padding: 15px 20px;
-}
-
-.campus .content-wrapper > .actions p {
-    color: var(--white);
-    margin: 0 auto 0 0;
-}
-
-.campus .content-wrapper > .actions .btn.primary {
-    background: var(--white);
-    border-color: transparent;
-    color: var(--black);
-}
-
-.campus .content-wrapper > .actions .btn.secondary {
-    color: var(--white);
-}
-
-.campus .content-wrapper > .actions .btn.secondary.delete {
-    color: var(--red);
-    margin-left: 20px;
-}
+/***Students List***/
 
 .students-list {
     background: var(--light-gray);
     height: 100%;
-    margin: -100px 0 80px;
-    margin-left: calc(var(--viewport-edge));
-    padding: 60px 60px 60px calc(var(--viewport-edge) * -1);
+    margin: -120px 0 80px calc(var(--viewport-edge));
+    padding: 80px 60px 80px calc(var(--viewport-edge) * -1);
 }
 
 .students-list h2 {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .students-list ul {
@@ -710,6 +685,40 @@ main.campus {
 
 .students-list .add-new-student .btn.secondary {
     margin: 0 0 0 10px;
+}
+
+/***Quick Actions***/
+
+.campus .quick-actions-campus {
+    align-items: center;
+    background: var(--black);
+    margin: 0 10px;
+    position: fixed;
+    width: calc(100% - 20px);
+    bottom: 10px;
+    padding: 15px 30px;
+}
+
+.campus .quick-actions-campus p {
+    color: var(--white);
+    margin: 0 auto 0 0;
+    position: relative;
+    top: 2px;
+}
+
+.campus .quick-actions-campus .btn.secondary {
+    color: var(--white);
+}
+
+.campus .quick-actions-campus .btn.secondary.delete {
+    color: var(--red);
+    margin-left: 25px;
+}
+
+.campus .quick-actions-campus .btn.secondary.go-back {
+    margin-right: 40px;
+    text-decoration-color: transparent;
+    color: var(--medium-gray);
 }
 
 /***************************************************************************************************************************************************************************************/

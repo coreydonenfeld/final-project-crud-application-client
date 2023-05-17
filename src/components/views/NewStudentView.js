@@ -10,11 +10,10 @@ import AsyncSelect from 'react-select/async';
 const SelectStyles = {
     control: (baseStyles, state) => ({
         ...baseStyles,
-        borderColor: state.isFocused ? 'black' : 'black',
+        borderColor: state.isFocused ? 'black' : 'var(--medium-gray)',
         '&:hover': { borderColor: 'black' },
         borderRadius: '0px',
         padding: '4px 12px',
-        border: '1px solid black',
         font: '400 calc(16rem / 16)/calc(18 / 16) var(--body-font)',
         outline: 'none',
         boxShadow: 'none',
@@ -52,10 +51,12 @@ const SelectStyles = {
         ...baseStyles,
         marginTop: '0',
         borderRadius: '0',
-        border: '1px solid black',
+        border: '1px solid var(--black)',
         backgroundColor: 'var(--white)',
+        border: '1px solid var(--medium-gray)',
         borderTop: 'none',
         boxShadow: 'none',
+        // boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
     }),
     menuList: (baseStyles, state) => ({
         ...baseStyles,
