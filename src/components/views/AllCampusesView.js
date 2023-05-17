@@ -12,7 +12,7 @@ const AllCampusesView = ({ campuses }) => {
     // If there is no campus, display a message.
     if (!campuses.length) {
         return (
-            <Container>
+            <Container variant="no-campuses">
                 <h1 className="heading-2">All Campuses <span className="count">({campuses.length})</span></h1>
                 <p>There are no campuses.</p>
                 <Button link={`/newcampus`} type="primary">Add New Campus</Button>
@@ -69,7 +69,11 @@ const AllCampusesView = ({ campuses }) => {
                                 </aside>
                             }
 
-                            <Button link={`/campus/${campus.id}`} type="secondary">View Campus</Button>
+                            <div className="actions flex">
+                                <Button link={`/campus/${campus.id}`} type="primary">View Campus</Button>
+                                <Button link={`/campus/${campus.id}/edit`} type="secondary" class="edit">Edit</Button>
+                                <Button link={`/campus/${campus.id}/delete?name=${campus.name}&referrer=/campuses`} type="secondary" class="delete">Delete</Button>
+                            </div>
                         </li>
                     );
                 })}

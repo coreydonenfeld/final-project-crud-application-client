@@ -21,23 +21,13 @@ class AllStudentsContainer extends Component {
         this.props.fetchAllStudents();
     }
 
-    // Delete a student. Confirms with user before deleting.
-    deleteStudentConfirm = (studentId) => {
-        if (window.confirm("Are you sure you want to delete this student?")) {
-            this.props.deleteStudent(studentId);
-        }
-    }
-
     // Render All Students view by passing all students data as props to the corresponding View component
     render() {
         return (
             <div>
                 <Header />
                 <main>
-                    <AllStudentsView
-                        students={this.props.allStudents}
-                        deleteStudent={this.deleteStudentConfirm}
-                    />
+                    <AllStudentsView students={this.props.allStudents} />
                 </main>
             </div>
         )
