@@ -8,10 +8,11 @@ import { Container, Button, Avatar } from "../jazzy-ui";
 const StudentView = (props) => {
     const { student, deleteStudent } = props;
 
-    if (student.id === undefined) {
+    if (student === null || student === undefined || typeof student.id === "undefined") {
         return (
             <Container>
                 <p>Student not found.</p>
+                <Button link="/students" type="secondary">Back to Students</Button>
             </Container>
         );
     }
