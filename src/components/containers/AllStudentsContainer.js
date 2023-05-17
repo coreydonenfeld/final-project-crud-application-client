@@ -9,12 +9,10 @@ import Header from './Header';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-
 import {
     fetchAllStudentsThunk,
     deleteStudentThunk
 } from '../../store/thunks';
-
 import { AllStudentsView } from '../views';
 
 class AllStudentsContainer extends Component {
@@ -23,6 +21,7 @@ class AllStudentsContainer extends Component {
         this.props.fetchAllStudents();
     }
 
+    // Delete a student. Confirms with user before deleting.
     deleteStudentConfirm = (studentId) => {
         if (window.confirm("Are you sure you want to delete this student?")) {
             this.props.deleteStudent(studentId);
