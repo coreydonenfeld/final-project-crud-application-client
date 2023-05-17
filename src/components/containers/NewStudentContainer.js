@@ -26,6 +26,7 @@ class NewStudentContainer extends Component {
             redirectId: null,
             allCampuses: [],
             defaultCampus: null,
+            campusId: null,
         };
 
         // get campusId and campusName from search query
@@ -38,6 +39,7 @@ class NewStudentContainer extends Component {
                 label: campusName,
                 value: campusId,
             };
+            this.state.campusId = campusId;
         }
     }
 

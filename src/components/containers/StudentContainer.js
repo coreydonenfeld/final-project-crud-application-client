@@ -26,7 +26,7 @@ class StudentContainer extends Component {
     deleteStudentConfirm = (studentId) => {
         if (window.confirm("Are you sure you want to delete this student?")) {
             this.props.deleteStudent(studentId);
-            //redirecting to all students page after deleting student
+            // redirecting to all students page after deleting student
             this.setState({ redirect: true });
         }
     }
