@@ -76,7 +76,7 @@ const CampusView = (props) => {
                     </div>
                 </aside>
             </Container>
-            <div className="actions quick-actions-campus flex">
+            <div className="actions quick-actions-nav flex">
                 <p className="heading-4">Quick Actions</p>
                 <Button link="/campuses" type="secondary go-back">Back to Campuses</Button>
                 <Button link={`/campus/${campus.id}/edit`} type="secondary edit">Edit Campus</Button>

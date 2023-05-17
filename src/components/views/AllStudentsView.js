@@ -4,8 +4,7 @@ AllStudentsView.js
 The Views component is responsible for rendering web page with data provided by the corresponding Container component.
 It constructs a React component to display the all students view page.
 ================================================== */
-import { Button, Container } from '../jazzy-ui';
-import { getRandomColors } from '../../utils';
+import { Button, Container, Avatar } from '../jazzy-ui';
 
 const AllStudentsView = (props) => {
     const { students, deleteStudent } = props;
@@ -26,31 +25,19 @@ const AllStudentsView = (props) => {
             <h1 className="heading-2">All Students <span className="count">({students.length})</span></h1>
             <ul className="grid">
             {students.map((student) => {
-                const [ avatarBackground, avatarColor ] = student.avatarColors;
-                const studentName = student.firstname + " " + student.lastname;
-                let Profile = <p>{student.firstname.charAt(0)}{student.lastname.charAt(0)}</p>;
-                if (student.imageUrl) {
-                    Profile = <img src={student.imageUrl} alt={`${student.firstname} ${student.lastname}`} />;
-                }
-
                 return (
                     <li className="student-profile large grid" key={student.id}>
-                        <Button link={`/student/${student.id}`}>
-                            <div className="avatar" style={{ backgroundColor: avatarBackground, color: avatarColor }}>
-                                {Profile}
-                            </div>
-                            <p className="heading-5">{studentName}</p>
-                        </Button>
+                        <Avatar student={student} includeName variant="large" />
                         <p className="email">{student.email}</p>
                         <div className="campus">
-                        {
-                            student.campus &&
-                            <Button link={`/campus/${student.campus.id}`} type="secondary">{student.campus.name}</Button>
-                        }
-                        {
-                            student.gpa > 0 &&
-                            <p className="gpa">{student.gpa} GPA</p>
-                        }
+                            {
+                                student.gpa > 0 &&
+                                <p className="gpa">{student.gpa} GPA</p>
+                            }
+                            {
+                                student.campus &&
+                                <Button link={`/campus/${student.campus.id}`} type="secondary">{student.campus.name}</Button>
+                            }
                         </div>
                         <div className="actions flex">
                             <Button link={`/student/${student.id}`} type="primary">View Student</Button>

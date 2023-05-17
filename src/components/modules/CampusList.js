@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button } from '../jazzy-ui';
-import { getRandomColors } from '../../utils';
+import { Button, Avatar } from '../jazzy-ui';
 
 const CampusList = ({ campuses }) => {
     if (!campuses || campuses.length === 0) {
@@ -43,20 +42,9 @@ const CampusList = ({ campuses }) => {
                             <aside className="flex students-preview">
                                 <ul className="flex">
                                     {campus.students.map((student) => {
-                                        const [ avatarBackground, avatarColor ] = student.avatarColors;
-                                        
-                                        let Profile = <p>{student.firstname.charAt(0)}{student.lastname.charAt(0)}</p>;
-                                        if (student.imageUrl) {
-                                            Profile = <img src={student.imageUrl} alt={`${student.firstname} ${student.lastname}`} />;
-                                        }
-
                                         return (
                                             <li className="student-profile" key={student.id}>
-                                                <Link to={`/student/${student.id}`}>
-                                                    <div className="avatar" style={{ backgroundColor: avatarBackground, color: avatarColor }}>
-                                                        {Profile}
-                                                    </div>
-                                                </Link>
+                                                <Avatar student={student} />
                                             </li>
                                         );
                                     })}

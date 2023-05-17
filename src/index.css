@@ -520,7 +520,7 @@ h1 + .campus-list {
     margin-left: -8px;
 }
 
-.student-profile .avatar {
+.student-avatar .avatar {
     align-items: center;
     border: 1px solid var(--light-gray);
     border-radius: 50%;
@@ -536,7 +536,7 @@ h1 + .campus-list {
     width: 30px;
 }
 
-.student-profile .avatar img {
+.student-avatar .avatar img {
     display: block;
     height: 30px;
     min-width: 30px;
@@ -544,15 +544,24 @@ h1 + .campus-list {
     width: 30px;
 }
 
-.student-profile .avatar p {
+.student-avatar .avatar p {
     font-size: calc(12rem / 16);
     line-height: calc(12 / 12);
 }
 
-.student-profile .avatar + p {
+.student-avatar .avatar + p {
     color: var(--black);
     font-weight: 500;
     margin: 0 0 0 6px;
+}
+
+.student-avatar.large .avatar {
+    height: 40px;
+    width: 40px;
+}
+
+.student-avatar.large .avatar p {
+    font-size: calc(14rem / 16);
 }
 
 .students-preview ul + p {
@@ -689,7 +698,7 @@ main.campus {
 
 /***Quick Actions***/
 
-.campus .quick-actions-campus {
+.quick-actions-nav {
     align-items: center;
     background: var(--black);
     bottom: 10px;
@@ -699,23 +708,23 @@ main.campus {
     width: calc(100% - 20px);
 }
 
-.campus .quick-actions-campus p {
+.quick-actions-nav p {
     color: var(--white);
     margin: 0 auto 0 0;
     position: relative;
     top: 2px;
 }
 
-.campus .quick-actions-campus .btn.secondary {
+.quick-actions-nav .btn.secondary {
     color: var(--white);
 }
 
-.campus .quick-actions-campus .btn.secondary.delete {
+.quick-actions-nav .btn.secondary.delete {
     color: var(--red);
     margin-left: 25px;
 }
 
-.campus .quick-actions-campus .btn.secondary.go-back {
+.quick-actions-nav .btn.secondary.go-back {
     color: var(--medium-gray);
     margin-right: 40px;
     text-decoration-color: transparent;
@@ -811,15 +820,6 @@ main.campus {
 
 .all-students .student-profile a {
     grid-column: span 3;
-}
-
-.all-students .student-profile .avatar {
-    height: 40px;
-    width: 40px;
-}
-
-.all-students .student-profile .avatar p {
-    font-size: calc(14rem / 16);
 }
 
 .all-students .student-profile .heading-5 {
