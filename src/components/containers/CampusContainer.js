@@ -8,7 +8,8 @@ If needed, it also defines the component's "connect" function.
 import Header from './Header';
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchCampusThunk } from "../../store/thunks";
+import { fetchCampusThunk, deleteCampusThunk } from "../../store/thunks";
+import { Redirect } from 'react-router-dom';
 
 import { CampusView } from "../views";
 
@@ -17,6 +18,12 @@ class CampusContainer extends Component {
     componentDidMount() {
         // Get campus ID from URL (API link)
         this.props.fetchCampus(this.props.match.params.id);
+
+        // check if delete is at end of pathname
+        if (this.props.location.pathname.endsWith('delete')) {
+            // delete student
+            this.deleteStudentConfirm(this.props.match.params.id, this.props.student.firstname);
+        }
     }
 
     // Render a Campus view by passing campus data as props to the corresponding View component
