@@ -9,18 +9,23 @@ import Header from './Header';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-
 import {
     fetchAllStudentsThunk,
     deleteStudentThunk
 } from '../../store/thunks';
-
 import { AllStudentsView } from '../views';
 
 class AllStudentsContainer extends Component {
     // Get all students data from back-end database
     componentDidMount() {
         this.props.fetchAllStudents();
+    }
+
+    // Delete a student. Confirms with user before deleting.
+    deleteStudentConfirm = (studentId) => {
+        if (window.confirm("Are you sure you want to delete this student?")) {
+            this.props.deleteStudent(studentId);
+        }
     }
 
     // Render All Students view by passing all students data as props to the corresponding View component
@@ -31,7 +36,7 @@ class AllStudentsContainer extends Component {
                 <main>
                     <AllStudentsView
                         students={this.props.allStudents}
-                        deleteStudent={this.props.deleteStudent}
+                        deleteStudent={this.deleteStudentConfirm}
                     />
                 </main>
             </div>

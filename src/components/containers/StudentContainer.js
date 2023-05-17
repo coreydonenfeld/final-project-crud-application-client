@@ -8,23 +8,59 @@ If needed, it also defines the component's "connect" function.
 import Header from './Header';
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchStudentThunk } from "../../store/thunks";
+import {
+    fetchStudentThunk,
+    deleteStudentThunk
+} from "../../store/thunks";
+import { Redirect } from 'react-router-dom';
 import { StudentView } from "../views";
 
 class StudentContainer extends Component {
     // Get student data from back-end database
     componentDidMount() {
-        //getting student ID from url
+        // getting student ID from url
         this.props.fetchStudent(this.props.match.params.id);
+
+        // check if delete is at end of pathname
+        if (this.props.location.pathname.endsWith('delete')) {
+            // delete student
+            this.deleteStudentConfirm(this.props.match.params.id, this.props.student.firstname);
+        }
+    }
+
+    // Delete a student. Confirms with user before deleting.
+    deleteStudentConfirm = (studentId, studentName = '') => {
+        if (!studentName) {
+            studentName = 'this student';
+        } else {
+            studentName = "the student " + studentName;
+        }
+        if (window.confirm(`Are you sure you want to delete ${studentName}?`)) {
+            this.props.deleteStudent(studentId);
+            // redirecting to all students page after deleting student
+            this.setState({ redirect: true });
+        }
     }
 
     // Render Student view by passing student data as props to the corresponding View component
     render() {
+        // Redirect to all students page after deleting student
+        if (this.state && this.state.redirect) {
+            return <Redirect to="/students" />;
+        }
+
+        if (!this.props.student) {
+            return <div>Loading...</div>;
+        }
+
         return (
             <div>
                 <Header />
                 <main>
-                    <StudentView student={this.props.student} />
+                    <StudentView
+                        student={this.props.student}
+                        deleteStudent={this.deleteStudentConfirm}
+                    />
                 </main>
             </div>
         );
@@ -43,6 +79,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
     return {
         fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
+        deleteStudent: (studentId) => dispatch(deleteStudentThunk(studentId)),
     };
 };
 
