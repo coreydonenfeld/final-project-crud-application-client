@@ -52,7 +52,7 @@ body {
 
 a { 
 	text-decoration: none;
-	transition: all .25s ease;
+	transition: opacity .25s ease;
 }
 
 a:hover {
@@ -127,7 +127,7 @@ h5,
 
 h6,
 .heading-6 {
-	/* font: 400 calc(24rem / 16)/calc(24 / 24) var(--heading-font); */
+	font: 600 calc(20rem / 16)/calc(30 / 20) var(--body-font);
 }
 
 p,
@@ -520,7 +520,7 @@ h1 + .campus-list {
     margin-left: -8px;
 }
 
-.student-profile .avatar {
+.student-avatar .avatar {
     align-items: center;
     border: 1px solid var(--light-gray);
     border-radius: 50%;
@@ -536,7 +536,7 @@ h1 + .campus-list {
     width: 30px;
 }
 
-.student-profile .avatar img {
+.student-avatar .avatar img {
     display: block;
     height: 30px;
     min-width: 30px;
@@ -544,15 +544,33 @@ h1 + .campus-list {
     width: 30px;
 }
 
-.student-profile .avatar p {
+.student-avatar .avatar p {
     font-size: calc(12rem / 16);
     line-height: calc(12 / 12);
 }
 
-.student-profile .avatar + p {
+.student-avatar .avatar + p {
     color: var(--black);
     font-weight: 500;
     margin: 0 0 0 6px;
+}
+
+.student-avatar.large .avatar {
+    height: 40px;
+    width: 40px;
+}
+
+.student-avatar.large .avatar p {
+    font-size: calc(14rem / 16);
+}
+
+.student-avatar.xlarge .avatar {
+    height: 50px;
+    width: 50px;
+}
+
+.student-avatar.xlarge .avatar p {
+    font-size: calc(16rem / 16);
 }
 
 .students-preview ul + p {
@@ -639,14 +657,19 @@ main.campus {
     width: 100%;
 }
 
+.students-list .student-profile .heading-6 {
+    font-size: calc(18rem / 16);
+    margin-left: 8px;
+}
+
 .students-list .student-profile .email {
     margin: 0;
     overflow-wrap: break-word;
+    width: 100%;
 }
 
 .students-list .student-profile .gpa {
     margin: 0;
-    padding-left: 10px;
 }
 
 .students-list .student-profile .actions {
@@ -689,7 +712,7 @@ main.campus {
 
 /***Quick Actions***/
 
-.campus .quick-actions-campus {
+.quick-actions-nav {
     align-items: center;
     background: var(--black);
     bottom: 10px;
@@ -699,23 +722,23 @@ main.campus {
     width: calc(100% - 20px);
 }
 
-.campus .quick-actions-campus p {
+.quick-actions-nav p {
     color: var(--white);
     margin: 0 auto 0 0;
     position: relative;
     top: 2px;
 }
 
-.campus .quick-actions-campus .btn.secondary {
+.quick-actions-nav .btn.secondary {
     color: var(--white);
 }
 
-.campus .quick-actions-campus .btn.secondary.delete {
+.quick-actions-nav .btn.secondary.delete {
     color: var(--red);
     margin-left: 25px;
 }
 
-.campus .quick-actions-campus .btn.secondary.go-back {
+.quick-actions-nav .btn.secondary.go-back {
     color: var(--medium-gray);
     margin-right: 40px;
     text-decoration-color: transparent;
@@ -792,10 +815,10 @@ main.campus {
 }
 
 .all-students .grid {
+    gap: 20px;
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 20px;
 }
 
 .all-students > .grid + .btn.primary {
@@ -803,36 +826,26 @@ main.campus {
 }
 
 .all-students .student-profile {
+    align-items: center;
     background: var(--light-gray);
     grid-column: -1 / 1;
     padding: 25px 40px;
-    align-items: center;
 }
 
 .all-students .student-profile a {
     grid-column: span 3;
 }
 
-.all-students .student-profile .avatar {
-    height: 40px;
-    width: 40px;
-}
-
-.all-students .student-profile .avatar p {
-    font-size: calc(14rem / 16);
-}
-
-.all-students .student-profile .heading-5 {
-    color: var(--black);
+.all-students .student-profile .heading-6 {
     font-weight: 600;
-    margin-left: 10px;
-    top: -1px;
+    margin-left: 8px;
     position: relative;
+    top: -1px;
 }
 
 .all-students .student-profile .email {
-    margin: 0;
     grid-column: span 3;
+    margin: 0;
 }
 
 .all-students .student-profile .campus {
@@ -848,9 +861,9 @@ main.campus {
 }
 
 .all-students .student-profile .actions {
-    width: 100%;
     grid-column: span 3;
     justify-content: flex-end;
+    width: 100%;
 }
 
 .all-students .student-profile .actions .primary {
@@ -863,6 +876,56 @@ main.campus {
 }
 
 .all-students.none h1 + p {
+    margin: 0 0 20px;
+}
+
+/***************************************************************************************************************************************************************************************/
+
+/*STUDENT STYLES*/
+
+/***************************************************************************************************************************************************************************************/
+
+.student p {
+    margin: 0;
+}
+
+.student .student-avatar {
+    margin-bottom: 8px;
+}
+
+.student .content-wrapper .large {
+    margin-top: 10px;
+}
+
+.student .content-wrapper .large + .large {
+    margin-top: 8px;
+}
+
+.container.student > .heading-5 {
+    margin: 30px 0 10px;
+}
+
+.student .content-wrapper {
+    grid-column: 2 / span 5;
+}
+
+.student aside {
+    grid-column: 7 / span 5;
+    background: var(--light-gray);
+    padding: 30px;
+    margin: 60px 0 0;
+}
+
+.student aside .heading-4 {
+    font-size: calc(20rem / 16);
+    letter-spacing: .2px;
+}
+
+.student aside .heading-5 {
+    margin: 4px 0 10px;
+}
+
+.student aside p.medium {
     margin: 0 0 20px;
 }
 

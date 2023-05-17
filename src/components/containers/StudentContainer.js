@@ -49,10 +49,6 @@ class StudentContainer extends Component {
             return <Redirect to="/students" />;
         }
 
-        if (!this.props.student) {
-            return <div>Loading...</div>;
-        }
-
         return (
             <div>
                 <Header />
