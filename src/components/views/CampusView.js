@@ -26,17 +26,9 @@ const CampusView = (props) => {
         <>
             <Container grid>
                 <div className="content-wrapper">
-                    <Button link="/campuses" type="secondary go-back">Back to Campuses</Button>
                     <h1 className="heading-xl">{campus.name}</h1>
                     <p className="medium large">{campus.address}</p>
                     <p className="large">{campus.description}</p>
-
-                    {/* ADD EDIT and delete buttons */}
-                    <div className="actions flex">
-                        <p>Quick Actions</p>
-                        <Button link={`/campus/${campus.id}/edit`} type="secondary edit">Edit Campus</Button>
-                        <Button link={`/campus/${campus.id}/delete`} type="secondary delete">Delete</Button>
-                    </div>
                 </div>
                 {Image}
             </Container>
@@ -81,10 +73,16 @@ const CampusView = (props) => {
                     </ul>
                     <div className="add-new-student flex">
                         <p>Want to add a new student to {campus.name}?</p>
-                        <Button link={`/newstudent/?campus=${campus.id}`} type="secondary">Add New Student</Button>
+                        <Button link={`/newstudent/?campusId=${campus.id}&campusName=${campus.name}`} type="secondary">Add New Student</Button>
                     </div>
                 </aside>
             </Container>
+            <div className="actions quick-actions-campus flex">
+                <p className="heading-5">Quick Actions</p>
+                <Button link="/campuses" type="secondary go-back">Back to Campuses</Button>
+                <Button link={`/campus/${campus.id}/edit`} type="secondary edit">Edit Campus</Button>
+                <Button link={`/campus/${campus.id}/delete`} type="secondary delete">Delete</Button>
+            </div>
         </>
     );
 };
