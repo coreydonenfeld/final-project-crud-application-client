@@ -567,7 +567,7 @@ h1 + .campus-list {
 /***************************************************************************************************************************************************************************************/
 
 main.campus {
-    padding-top: var(--gap);
+    padding: var(--gap) 0 120px;
 }
 
 .campus .image-wrapper {
@@ -606,7 +606,7 @@ main.campus {
 .students-list {
     background: var(--light-gray);
     height: 100%;
-    margin: -120px 0 80px calc(var(--viewport-edge));
+    margin: -120px 0 0 calc(var(--viewport-edge));
     padding: 80px 60px 80px calc(var(--viewport-edge) * -1);
 }
 
