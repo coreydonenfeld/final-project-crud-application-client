@@ -12,7 +12,7 @@ const AllStudentsView = (props) => {
     // If there is no student, display a message
     if (!students.length) {
         return (
-            <Container>
+            <Container variant="all-students none">
                 <h1 className="heading-2">All Students <span className="count">({students.length})</span></h1>
                 <p>There are no students.</p>
                 <Button link={`/newstudent`} type="primary">Add New Student</Button>
