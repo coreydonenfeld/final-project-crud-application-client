@@ -117,12 +117,12 @@ h3,
 
 h4,
 .heading-4 {
-	/* font: 600 calc(28rem / 16)/calc(38 / 28) var(--heading-font); */
+    font: 400 calc(24rem / 16)/calc(24 / 24) var(--heading-font);
 }
 
 h5,
 .heading-5 {
-	font: 400 calc(24rem / 16)/calc(24 / 24) var(--heading-font);
+	font: 600 calc(24rem / 16)/calc(32 / 24) var(--body-font);
 }
 
 h6,
@@ -289,6 +289,7 @@ article {
 	border: none;
 	color: var(--black);
 	font: 500 calc(16rem / 16)/calc(18 / 16) var(--body-font);
+    padding: 0;
 	text-decoration: underline;
 	text-decoration-thickness: 1px;
 	text-underline-offset: 4px;
@@ -466,10 +467,6 @@ h1 + .campus-list {
 
 .campus-item h3 {
     color: var(--black);
-    font-family: var(--body-font);
-    font-size: calc(24rem / 16);
-    font-weight: 600;
-    line-height: calc(32 / 24);
 }
 
 .campus-item p {
@@ -529,9 +526,11 @@ h1 + .campus-list {
     border-radius: 50%;
     color: var(--white);
     display: flex;
+    flex-shrink: 0;
     font-weight: 500;
     height: 30px;
     justify-content: center;
+    min-width: 30px;
     overflow: hidden;
     text-align: center;
     width: 30px;
@@ -568,7 +567,7 @@ h1 + .campus-list {
 /***************************************************************************************************************************************************************************************/
 
 main.campus {
-    padding-top: var(--gap);
+    padding: var(--gap) 0 120px;
 }
 
 .campus .image-wrapper {
@@ -607,7 +606,7 @@ main.campus {
 .students-list {
     background: var(--light-gray);
     height: 100%;
-    margin: -120px 0 80px calc(var(--viewport-edge));
+    margin: -120px 0 0 calc(var(--viewport-edge));
     padding: 80px 60px 80px calc(var(--viewport-edge) * -1);
 }
 
@@ -780,6 +779,91 @@ main.campus {
 
 #error-notices div + div {
     margin-top: 4px;
+}
+
+/***************************************************************************************************************************************************************************************/
+
+/*STUDENTS STYLES*/
+
+/***************************************************************************************************************************************************************************************/
+
+.all-students h1 {
+    margin: 0 0 48px;
+}
+
+.all-students .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+}
+
+.all-students > .grid + .btn.primary {
+    margin: 50px 0 0;
+}
+
+.all-students .student-profile {
+    background: var(--light-gray);
+    grid-column: -1 / 1;
+    padding: 25px 40px;
+    align-items: center;
+}
+
+.all-students .student-profile a {
+    grid-column: span 3;
+}
+
+.all-students .student-profile .avatar {
+    height: 40px;
+    width: 40px;
+}
+
+.all-students .student-profile .avatar p {
+    font-size: calc(14rem / 16);
+}
+
+.all-students .student-profile .heading-5 {
+    color: var(--black);
+    font-weight: 600;
+    margin-left: 10px;
+    top: -1px;
+    position: relative;
+}
+
+.all-students .student-profile .email {
+    margin: 0;
+    grid-column: span 3;
+}
+
+.all-students .student-profile .campus {
+    grid-column: span 3;
+}
+
+.all-students .student-profile .campus .btn + .gpa {
+    margin-top: 4px;
+}
+
+.all-students .student-profile .gpa {
+    margin: 0;
+}
+
+.all-students .student-profile .actions {
+    width: 100%;
+    grid-column: span 3;
+    justify-content: flex-end;
+}
+
+.all-students .student-profile .actions .primary {
+    margin-right: 30px;
+}
+
+.all-students .student-profile .actions .edit + .delete {
+    color: var(--red);
+    margin-left: 15px;
+}
+
+.all-students.none h1 + p {
+    margin: 0 0 20px;
 }
 
 /***************************************************************************************************************************************************************************************/

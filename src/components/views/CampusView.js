@@ -41,21 +41,20 @@ const CampusView = (props) => {
                     }
                     <ul className="grid">
                         {campus.students.map((student) => {
+                            const [ avatarBackground, avatarColor ] = student.avatarColors;
+                            const studentName = student.firstname + " " + student.lastname;
                             let Profile = <p>{student.firstname.charAt(0)}{student.lastname.charAt(0)}</p>;
                             if (student.imageUrl) {
                                 Profile = <img src={student.imageUrl} alt={`${student.firstname} ${student.lastname}`} />;
                             }
-                            let name = student.firstname + " " + student.lastname;
-
-                            const [randomBackgroundColor, randomTextColor] = getRandomColors();
 
                             return (
                                 <li className="student-profile" key={student.id}>
                                     <Link to={`/student/${student.id}`}>
-                                        <div className="avatar" style={{ backgroundColor: randomBackgroundColor, color: randomTextColor }}>
+                                        <div className="avatar" style={{ backgroundColor: avatarBackground, color: avatarColor }}>
                                             {Profile}
                                         </div>
-                                        <p>{name}</p>
+                                        <p>{studentName}</p>
                                     </Link>
                                     <p className="email">{student.email}</p>
                                     {
@@ -78,7 +77,7 @@ const CampusView = (props) => {
                 </aside>
             </Container>
             <div className="actions quick-actions-campus flex">
-                <p className="heading-5">Quick Actions</p>
+                <p className="heading-4">Quick Actions</p>
                 <Button link="/campuses" type="secondary go-back">Back to Campuses</Button>
                 <Button link={`/campus/${campus.id}/edit`} type="secondary edit">Edit Campus</Button>
                 <Button link={`/campus/${campus.id}/delete`} type="secondary delete">Delete</Button>
