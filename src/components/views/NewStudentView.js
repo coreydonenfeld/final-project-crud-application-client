@@ -51,12 +51,10 @@ const SelectStyles = {
         ...baseStyles,
         marginTop: '0',
         borderRadius: '0',
-        border: '1px solid var(--black)',
         backgroundColor: 'var(--white)',
         border: '1px solid var(--medium-gray)',
         borderTop: 'none',
         boxShadow: 'none',
-        // boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
     }),
     menuList: (baseStyles, state) => ({
         ...baseStyles,

@@ -732,7 +732,7 @@ main.campus {
 }
 
 .new-student h1 {
-    grid-column: -1 / 1;
+    grid-column: 3 / span 8;
 }
 
 .add-student {
@@ -740,7 +740,7 @@ main.campus {
     background: var(--light-gray);
     gap: 30px;
     padding: 40px;
-    grid-column: span 8;
+    grid-column: 3 / span 8;
 }
 
 .add-student .form-input-wrapper {
