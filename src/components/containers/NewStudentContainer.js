@@ -37,6 +37,9 @@ class NewStudentContainer extends Component {
         if (campusId && campusName) {
             this.state.campusId = campusId;
             this.state.campusName = campusName;
+        } else {
+            this.state.campusId = null;
+            this.state.campusName = null;
         }
     }
 
