@@ -1,10 +1,9 @@
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Button } from '../jazzy-ui';
 import { getRandomColors } from '../../utils';
 
 const CampusList = ({ campuses }) => {
-    if (!campuses || !campuses.length) {
+    if (!campuses || campuses.length === 0) {
         return (
             <div>There are no campuses.</div>
         );
@@ -12,8 +11,16 @@ const CampusList = ({ campuses }) => {
     return (
         <ul className="grid campus-list">
             {campuses.map((campus) => {
+                // Undefined check
+                if (campus.id === undefined) {
+                    return null;
+                }
+                if (campus.students === undefined) {
+                    campus.students = [];
+                }
+
                 let Image = null;
-                if (campus.imageUrl !== null) {
+                if (campus.imageUrl !== '') {
                     Image = (
                         <Link to={`/campus/${campus.id}`} className="image-wrapper">
                             <img src={campus.imageUrl} alt={campus.name} />
@@ -27,7 +34,10 @@ const CampusList = ({ campuses }) => {
                             <h3 className="heading-5">{campus.name}</h3>
                         </Link>
                         <p className="address">{campus.address}</p>
-                        <p className="description">{campus.description}</p>
+                        {
+                            campus.description &&
+                            <p className="description">{campus.description}</p>
+                        }
                         {
                             campus.students.length > 0 &&
                             <aside className="flex students-preview">
@@ -61,11 +71,6 @@ const CampusList = ({ campuses }) => {
             })}
         </ul>
     );
-};
-
-// Validate data type of the props passed to component.
-CampusList.propTypes = {
-    campuses: PropTypes.array.isRequired,
 };
 
 export default CampusList;
