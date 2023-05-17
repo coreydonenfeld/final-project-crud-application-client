@@ -41,11 +41,6 @@ class NewStudentContainer extends Component {
         }
     }
 
-    // Get all campuses data from back-end database
-    componentDidMount() {
-        this.props.fetchAllCampuses();
-    }
-
     // Capture input data when it is entered
     handleChange = event => {
         this.clearErrorNotices();

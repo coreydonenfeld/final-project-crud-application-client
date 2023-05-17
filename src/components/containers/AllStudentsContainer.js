@@ -15,7 +15,7 @@ import {
     deleteStudentThunk
 } from '../../store/thunks';
 
-import AllStudentsView from '../views/AllStudentsView';
+import { AllStudentsView } from '../views';
 
 class AllStudentsContainer extends Component {
     // Get all students data from back-end database
