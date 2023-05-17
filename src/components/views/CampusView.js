@@ -4,9 +4,7 @@ CampusView.js
 The Views component is responsible for rendering web page with data provided by the corresponding Container component.
 It constructs a React component to display a single campus and its students (if any).
 ================================================== */
-import { Link } from "react-router-dom";
-import { Container, Button } from "../jazzy-ui";
-import { getRandomColors } from '../../utils';
+import { Container, Button, Avatar } from "../jazzy-ui";
 
 // Take in props data to construct the component
 const CampusView = (props) => {
@@ -41,22 +39,10 @@ const CampusView = (props) => {
                     }
                     <ul className="grid">
                         {campus.students.map((student) => {
-                            const [ avatarBackground, avatarColor ] = student.avatarColors;
-                            const studentName = student.firstname + " " + student.lastname;
-                            let Profile = <p>{student.firstname.charAt(0)}{student.lastname.charAt(0)}</p>;
-                            if (student.imageUrl) {
-                                Profile = <img src={student.imageUrl} alt={`${student.firstname} ${student.lastname}`} />;
-                            }
-
                             return (
                                 <li className="student-profile" key={student.id}>
-                                    <Link to={`/student/${student.id}`}>
-                                        <div className="avatar" style={{ backgroundColor: avatarBackground, color: avatarColor }}>
-                                            {Profile}
-                                        </div>
-                                        <p>{studentName}</p>
-                                    </Link>
-                                    <p className="email">{student.email}</p>
+                                    <Avatar student={student} includeName nameHeadingLevel="6" />
+                                    <p className="email medium">{student.email}</p>
                                     {
                                         student.gpa > 0 &&
                                         <p className="gpa">{student.gpa} GPA</p>

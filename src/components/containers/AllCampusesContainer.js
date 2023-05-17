@@ -30,7 +30,7 @@ class AllCampusesContainer extends Component {
                 <Header />
                 <main>
                     <AllCampusesView
-                        allCampuses={this.props.allCampuses}
+                        campuses={this.props.allCampuses}
                     />
                 </main>
             </div>

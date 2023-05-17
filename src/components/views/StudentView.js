@@ -19,13 +19,22 @@ const StudentView = (props) => {
     // Render a single Student view 
     return (
         <>
-            <Container variant="student">
-                <Avatar student={student} variant="large" />
-                <h1 className="heading-xl">{student.firstname + " " + student.lastname}</h1>
-                <p className="medium large">{student.email}</p>
-                <p className="large">{student.gpa} GPA</p>
-                <p className="heading-5">{student.campus.name}</p>
-                <Button link={`/campus/${student.campus.id}`} type="secondary">View Campus</Button>
+            <Container variant="student" grid>
+                <div className="content-wrapper">
+                    <Avatar student={student} variant="xlarge" />
+                    <h1 className="heading-xl">{student.firstname + " " + student.lastname}</h1>
+                    <p className="medium large">{student.email}</p>
+                    <p className="large">{student.gpa} GPA</p>
+                </div>
+                {
+                    student.campus && 
+                    <aside>
+                        <p className="heading-4">Attending</p>
+                        <p className="heading-5">{student.campus.name}</p>
+                        <p className="medium">{student.campus.address}</p>
+                        <Button link={`/campus/${student.campus.id}`} type="primary">View Campus</Button>
+                    </aside>
+                }
             </Container>
             <div className="actions quick-actions-nav flex">
                 <p className="heading-4">Quick Actions</p>

@@ -8,7 +8,7 @@ class Avatar extends Component {
         this.state = {
             student: props.student,
             includeName: props.includeName || false,
-            nameHeadingLevel: props.nameHeadingLevel || 5,
+            nameHeadingLevel: props.nameHeadingLevel || "",
             variant: props.variant || "",
         };
     }
@@ -17,9 +17,15 @@ class Avatar extends Component {
         const { student, includeName, variant } = this.state;
         const [ avatarBackground, avatarColor ] = student.avatarColors;
         const studentName = student.firstname + " " + student.lastname;
+        
         let Profile = <p>{student.firstname.charAt(0)}{student.lastname.charAt(0)}</p>;
         if (student.imageUrl) {
             Profile = <img src={student.imageUrl} alt={`${student.firstname} ${student.lastname}`} />;
+        }
+
+        let nameHeadingLevel = "";
+        if (this.state.nameHeadingLevel !== "") {
+            nameHeadingLevel = "heading-" + this.state.nameHeadingLevel;
         }
 
         if (!student) {
@@ -33,7 +39,7 @@ class Avatar extends Component {
                 </div>
                 {
                     includeName &&
-                    <p className="heading-5">{studentName}</p>
+                    <p className={nameHeadingLevel}>{studentName}</p>
                 }
             </Button>
         )

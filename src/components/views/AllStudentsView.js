@@ -27,7 +27,7 @@ const AllStudentsView = (props) => {
             {students.map((student) => {
                 return (
                     <li className="student-profile large grid" key={student.id}>
-                        <Avatar student={student} includeName variant="large" />
+                        <Avatar student={student} includeName variant="large" nameHeadingLevel="6" />
                         <p className="email">{student.email}</p>
                         <div className="campus">
                             {
