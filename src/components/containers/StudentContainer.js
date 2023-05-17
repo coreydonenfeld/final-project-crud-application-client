@@ -18,8 +18,14 @@ import { StudentView } from "../views";
 class StudentContainer extends Component {
     // Get student data from back-end database
     componentDidMount() {
-        //getting student ID from url
+        // getting student ID from url
         this.props.fetchStudent(this.props.match.params.id);
+
+        // check if delete is at end of pathname
+        if (this.props.location.pathname.endsWith('delete')) {
+            // delete student
+            this.deleteStudentConfirm(this.props.match.params.id, this.props.student.firstname);
+        }
     }
 
     // Delete a student. Confirms with user before deleting.
