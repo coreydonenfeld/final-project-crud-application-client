@@ -12,7 +12,7 @@ import {
     fetchStudentThunk,
     deleteStudentThunk
 } from "../../store/thunks";
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { StudentView } from "../views";
 
 class StudentContainer extends Component {
@@ -101,4 +101,4 @@ const mapDispatch = (dispatch) => {
 // Export store-connected container by default
 // StudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default connect(mapState, mapDispatch)(StudentContainer);
+export default withRouter(connect(mapState, mapDispatch)(StudentContainer));

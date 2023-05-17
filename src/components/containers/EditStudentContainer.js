@@ -1,5 +1,5 @@
 /*==================================================
-NewStudentContainer.js
+EditStudentContainer.js
 
 The Container component is responsible for stateful logic and data fetching, and
 passes data (if any) as props to the corresponding View component.
@@ -10,37 +10,31 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
-import NewStudentView from '../views/NewStudentView';
-import { addStudentThunk, fetchAllCampusesThunk } from '../../store/thunks';
+import { EditStudentView } from '../views';
+import { editStudentThunk, fetchAllCampusesThunk, fetchStudentThunk } from '../../store/thunks';
 
-class NewStudentContainer extends Component {
+class EditStudentContainer extends Component {
     // Initialize state
     constructor(props) {
         super(props);
         this.state = {
+            studentId: this.props.match.params.id,
             firstname: "",
             lastname: "",
-            imageUrl: "",
+            campusId: null,
             email: "",
+            gpa: null,
+            imageUrl: "",
             redirect: false,
             redirectId: null,
             allCampuses: [],
-            defaultCampus: null,
-            campusId: null,
         };
+    }
 
-        // get campusId and campusName from search query
-        const searchParams = new URLSearchParams(this.props.location.search);
-        const campusId = searchParams.get('campusId');
-        const campusName = searchParams.get('campusName');
-
-        if (campusId && campusName) {
-            this.state.defaultCampus = {
-                label: campusName,
-                value: campusId,
-            };
-            this.state.campusId = campusId;
-        }
+    // Fetch student data when component mounts
+    componentDidMount() {
+        this.props.fetchAllCampuses();
+        this.props.fetchStudent(this.props.match.params.id);
     }
 
     // Capture input data when it is entered
@@ -112,89 +106,102 @@ class NewStudentContainer extends Component {
     }
 
     // Take action after user click the submit button
-    handleSubmit = async event => {
+    handleSubmit = async (event) => {
         event.preventDefault();  // Prevent browser reload/refresh after submit.
 
-        // error handling
-        const errors = [
-            {
-                field: 'firstname',
-                message: 'Please enter a first name.',
-                validation: 'required',
-            },
-            {
-                field: 'lastname',
-                message: 'Please enter a last name.',
-                validation: 'required',
-            },
-            {
-                field: 'email',
-                message: 'Please enter an email address.',
-                validation: 'required',
-            },
-            {
-                field: 'campusId',
-                message: 'Please select a campus.',
-                validation: 'required',
-            },
-            {
-                field: 'gpa',
-                message: 'Please enter a GPA between 0 and 4.',
-                validation: (gpa) => {
-                    if (typeof gpa === 'undefined') return true;  // allow empty string (no GPA)
-                    return gpa >= 0 && gpa <= 4;
-                }
-            },
-            {
-                field: 'imageUrl',
-                message: 'Please enter a valid URL.',
-            }
-        ];
-        this.clearErrorNotices();
+        console.log(event.target.firstname.value);
 
-        let isValid = true;
-        errors.forEach(error => {
-            if (error.validation === 'required' && !this.state[error.field]) {
-                this.addErrorNotice(error.message, error.field);
-                isValid = false;
-            } else if (typeof error.validation === 'function' && !error.validation(this.state[error.field])) {
-                this.addErrorNotice(error.message, error.field);
-                isValid = false;
-            }
 
-            // check that it is not greater than 255 characters
-            if (this.state[error.field] && this.state[error.field].length > 255) {
-                this.addErrorNotice('Please enter a value less than 255 characters.', error.field);
-                isValid = false;
-            }
-        });
-
-        if (!isValid) {
-            return;
-        }
-
-        let student = {
-            firstname: this.state.firstname,
-            lastname: this.state.lastname,
-            campusId: this.state.campusId,
-            email: this.state.email,
-            imageUrl: this.state.imageUrl,
-            gpa: this.state.gpa,
-        };
-
-        // Add new student in back-end database
-        let newStudent = await this.props.addStudent(student);
-
-        // Update state, and trigger redirect to show the new student
         this.setState({
-            firstname: "",
-            lastname: "",
-            campusId: null,
-            email: "",
-            redirect: true,
-            redirectId: newStudent.id,
-            gpa: "",
-            imageUrl: "",
+            firstname: event.target.firstname.value,
+            lastname: event.target.lastname.value,
+            campusId: event.target.campusId.value,
+            email: event.target.email.value,
+            gpa: event.target.gpa.value,
+            imageUrl: event.target.imageUrl.value,
+        }, async () => {
+            // error handling
+            const errors = [
+                {
+                    field: 'firstname',
+                    message: 'Please enter a first name.',
+                    validation: 'required',
+                },
+                {
+                    field: 'lastname',
+                    message: 'Please enter a last name.',
+                    validation: 'required',
+                },
+                {
+                    field: 'email',
+                    message: 'Please enter an email address.',
+                    validation: 'required',
+                },
+                {
+                    field: 'campusId',
+                    message: 'Please select a campus.',
+                    validation: 'required',
+                },
+                {
+                    field: 'gpa',
+                    message: 'Please enter a GPA between 0 and 4.',
+                    validation: (gpa) => {
+                        if (typeof gpa === 'undefined') return true;  // allow empty string (no GPA)
+                        return gpa >= 0 && gpa <= 4;
+                    }
+                },
+                {
+                    field: 'imageUrl',
+                    message: 'Please enter a valid URL.',
+                }
+            ];
+            this.clearErrorNotices();
+
+            let isValid = true;
+            errors.forEach(error => {
+                if (error.validation === 'required' && !this.state[error.field]) {
+                    this.addErrorNotice(error.message, error.field);
+                    isValid = false;
+                } else if (typeof error.validation === 'function' && !error.validation(this.state[error.field])) {
+                    this.addErrorNotice(error.message, error.field);
+                    isValid = false;
+                }
+
+                // check that it is not greater than 255 characters
+                if (this.state[error.field] && this.state[error.field].length > 255) {
+                    this.addErrorNotice('Please enter a value less than 255 characters.', error.field);
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                return;
+            }
+
+            let student = {
+                id: this.state.studentId,
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                campusId: this.state.campusId,
+                email: this.state.email,
+                imageUrl: this.state.imageUrl,
+                gpa: this.state.gpa || null,
+            };
+
+            // Add new student in back-end database
+            let newStudent = await this.props.editStudent(student);
+
+            // Update state, and trigger redirect to show the new student
+            this.setState({
+                firstname: "",
+                lastname: "",
+                campusId: null,
+                email: "",
+                redirect: true,
+                redirectId: newStudent.id,
+                gpa: null,
+                imageUrl: "",
+            });
         });
     }
 
@@ -215,13 +222,13 @@ class NewStudentContainer extends Component {
             <div>
                 <Header />
                 <main className="new-student">
-                    <NewStudentView
+                    <EditStudentView
                         handleChange={this.handleChange}
                         handleSelectChange={this.handleSelectChange}
                         handleSubmit={this.handleSubmit}
                         getCampusesForSelect={this.getCampusesForSelect}
                         allCampuses={this.props.allCampuses}
-                        defaultCampus={this.state.defaultCampus}
+                        student={this.props.student}
                     />
                 </main>
             </div>
@@ -232,6 +239,7 @@ class NewStudentContainer extends Component {
 const mapState = (state) => {
     return {
         allCampuses: state.allCampuses,  // Get the State object from Reducer "allCampuses"
+        student: state.student,
     };
 };
 
@@ -240,12 +248,13 @@ const mapState = (state) => {
 // The "mapDispatch" calls the specific Thunk to dispatch its action. The "dispatch" is a function of Redux Store.
 const mapDispatch = (dispatch) => {
     return ({
-        addStudent: (student) => dispatch(addStudentThunk(student)),
+        editStudent: (student) => dispatch(editStudentThunk(student)),
         fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
+        fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
     })
 }
 
 // Export store-connected container by default
 // NewStudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default withRouter(connect(mapState, mapDispatch)(NewStudentContainer));
+export default withRouter(connect(mapState, mapDispatch)(EditStudentContainer));
