@@ -25,8 +25,7 @@ class NewStudentContainer extends Component {
             redirect: false,
             redirectId: null,
             allCampuses: [],
-            campusId: null,
-            campusName: null,
+            defaultCampus: null,
         };
 
         // get campusId and campusName from search query
@@ -35,11 +34,10 @@ class NewStudentContainer extends Component {
         const campusName = searchParams.get('campusName');
 
         if (campusId && campusName) {
-            this.state.campusId = campusId;
-            this.state.campusName = campusName;
-        } else {
-            this.state.campusId = null;
-            this.state.campusName = null;
+            this.state.defaultCampus = {
+                label: campusName,
+                value: campusId,
+            };
         }
     }
 
@@ -50,6 +48,7 @@ class NewStudentContainer extends Component {
 
     // Capture input data when it is entered
     handleChange = event => {
+        this.clearErrorNotices();
         this.setState({
             [event.target.name]: event.target.value
         });
@@ -84,9 +83,88 @@ class NewStudentContainer extends Component {
         return campuses;
     }
 
+    getErrorNotices = () => {
+        const errorNotices = document.getElementById('error-notices');
+        return errorNotices;
+    }
+
+    addErrorNotice = (message, field = '') => {
+        const errorNotices = this.getErrorNotices();
+        let notice = document.createElement('div');
+        notice.innerHTML = message;
+        errorNotices.appendChild(notice);
+
+        if (field) {
+            let input = document.querySelector(`input[name=${field}]`);
+            let inputWrapper = input.parentElement;
+            if (inputWrapper) {
+                inputWrapper.classList.add('error');
+            }
+        }
+    }
+
+    clearErrorNotices = () => {
+        const errorNotices = this.getErrorNotices();
+        errorNotices.innerHTML = '';
+
+        const inputs = document.querySelectorAll('.form-input-wrapper input');
+        inputs.forEach(input => {
+            let inputWrapper = input.parentElement;
+            inputWrapper.classList.remove('error');
+        });
+    }
+
     // Take action after user click the submit button
     handleSubmit = async event => {
         event.preventDefault();  // Prevent browser reload/refresh after submit.
+
+        // error handling
+        const errors = [
+            {
+                field: 'firstname',
+                message: 'Please enter a first name.',
+                validation: 'required',
+            },
+            {
+                field: 'lastname',
+                message: 'Please enter a last name.',
+                validation: 'required',
+            },
+            {
+                field: 'email',
+                message: 'Please enter an email address.',
+                validation: 'required',
+            },
+            {
+                field: 'campusId',
+                message: 'Please select a campus.',
+                validation: 'required',
+            },
+            {
+                field: 'gpa',
+                message: 'Please enter a GPA between 0 and 4.',
+                validation: (gpa) => {
+                    if (typeof gpa === 'undefined') return true;  // allow empty string (no GPA)
+                    return gpa >= 0 && gpa <= 4;
+                }
+            }
+        ];
+        this.clearErrorNotices();
+        let isValid = true;
+        errors.forEach(error => {
+            if (error.validation === 'required' && !this.state[error.field]) {
+                this.addErrorNotice(error.message, error.field);
+                isValid = false;
+            } else if (typeof error.validation === 'function' && !error.validation(this.state[error.field])) {
+                this.addErrorNotice(error.message, error.field);
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            return;
+        }
+
 
         let student = {
             firstname: this.state.firstname,
@@ -136,7 +214,7 @@ class NewStudentContainer extends Component {
                         handleSubmit={this.handleSubmit}
                         getCampusesForSelect={this.getCampusesForSelect}
                         allCampuses={this.props.allCampuses}
-                        defaultCampus={{ label: this.state.campusName, id: this.state.campusId }}
+                        defaultCampus={this.state.defaultCampus}
                     />
                 </main>
             </div>

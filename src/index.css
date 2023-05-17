@@ -692,11 +692,11 @@ main.campus {
 .campus .quick-actions-campus {
     align-items: center;
     background: var(--black);
+    bottom: 10px;
     margin: 0 10px;
+    padding: 15px 30px;
     position: fixed;
     width: calc(100% - 20px);
-    bottom: 10px;
-    padding: 15px 30px;
 }
 
 .campus .quick-actions-campus p {
@@ -716,9 +716,9 @@ main.campus {
 }
 
 .campus .quick-actions-campus .btn.secondary.go-back {
+    color: var(--medium-gray);
     margin-right: 40px;
     text-decoration-color: transparent;
-    color: var(--medium-gray);
 }
 
 /***************************************************************************************************************************************************************************************/
@@ -735,16 +735,53 @@ main.campus {
     grid-column: 3 / span 8;
 }
 
-.add-student {
-    margin: 0 0 100px;
+.main-form {
     background: var(--light-gray);
     gap: 30px;
-    padding: 40px;
     grid-column: 3 / span 8;
+    margin: 0 0 100px;
+    padding: 40px;
 }
 
-.add-student .form-input-wrapper {
+.main-form .form-input-wrapper {
     grid-column: -1 / 1;
+}
+
+.main-form .form-input-wrapper .required {
+    font-size: 0;
+}
+
+.main-form .form-input-wrapper .required::after {
+    color: var(--red);
+    content: "*";
+    font-size: 1rem;
+    line-height: 1;
+    margin-left: -2px;
+}
+
+.main-form .form-input-wrapper.error input {
+    border-color: var(--red);
+}
+
+.main-form [type="submit"] {
+    grid-column: -1 / 1;
+    margin: 10px 0 0;
+    width: fit-content;
+}
+
+#error-notices {
+    background: var(--red);
+    color: var(--white);
+    grid-column: -1 / 1;
+    padding: 15px 20px;
+}
+
+#error-notices:empty {
+    display: none;
+}
+
+#error-notices div + div {
+    margin-top: 4px;
 }
 
 /***************************************************************************************************************************************************************************************/

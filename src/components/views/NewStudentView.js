@@ -67,30 +67,29 @@ const SelectStyles = {
 function NewStudentView(props) {
     const { handleChange, handleSelectChange, handleSubmit, getCampusesForSelect, defaultCampus } = props;
 
-    console.log(props)
-
     // Render a New Student view with an input form
     return (
         <Container grid>
             <h1 className="heading-2">Add Student</h1>
-            <form onSubmit={(e) => handleSubmit(e)} className="grid add-student">
+            <form onSubmit={(e) => handleSubmit(e)} className="grid main-form add-student">
+                <div id="error-notices"></div>
+
                 <div className="form-input-wrapper">
-                    <label>First Name</label>
-                    <input type="text" name="firstname" required onChange={(e) => handleChange(e)} />
+                    <label>First Name <span className="required">(required)</span></label>
+                    <input type="text" name="firstname" onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="form-input-wrapper">
-                    <label>Last Name</label>
-                    <input type="text" name="lastname" required onChange={(e) => handleChange(e)} />
+                    <label>Last Name <span className="required">(required)</span></label>
+                    <input type="text" name="lastname" onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="form-input-wrapper">
-                    <label>Campus</label>
+                    <label>Campus <span className="required">(required)</span></label>
                     <AsyncSelect
                         name="campusId"
                         cacheOptions
                         defaultOptions
-                        required={true}
                         loadOptions={getCampusesForSelect}
                         onChange={(e) => handleSelectChange(e, 'campusId')}
                         placeholder="Select a campus"
@@ -100,8 +99,8 @@ function NewStudentView(props) {
                 </div>
 
                 <div className="form-input-wrapper">
-                    <label>Email</label>
-                    <input type="email" name="email"  onChange={(e) => handleChange(e)} />
+                    <label>Email <span className="required">(required)</span></label>
+                    <input type="email" name="email" onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="form-input-wrapper">
@@ -114,7 +113,7 @@ function NewStudentView(props) {
                     <input type="url" name="imageUrl" onChange={(e) => handleChange(e)} />
                 </div>
 
-                <Button role="submit" type="primary">Submit</Button>
+                <Button role="submit" type="primary">Add New Student</Button>
             </form>
         </Container>
     );
