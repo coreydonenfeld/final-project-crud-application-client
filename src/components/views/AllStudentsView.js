@@ -26,21 +26,20 @@ const AllStudentsView = (props) => {
             <h1 className="heading-2">All Students <span className="count">({students.length})</span></h1>
             <ul className="grid">
             {students.map((student) => {
+                const [ avatarBackground, avatarColor ] = student.avatarColors;
+                const studentName = student.firstname + " " + student.lastname;
                 let Profile = <p>{student.firstname.charAt(0)}{student.lastname.charAt(0)}</p>;
                 if (student.imageUrl) {
                     Profile = <img src={student.imageUrl} alt={`${student.firstname} ${student.lastname}`} />;
                 }
-                let name = student.firstname + " " + student.lastname;
-
-                const [randomBackgroundColor, randomTextColor] = getRandomColors();
 
                 return (
                     <li className="student-profile large grid" key={student.id}>
                         <Button link={`/student/${student.id}`}>
-                            <div className="avatar" style={{ backgroundColor: randomBackgroundColor, color: randomTextColor }}>
+                            <div className="avatar" style={{ backgroundColor: avatarBackground, color: avatarColor }}>
                                 {Profile}
                             </div>
-                            <p className="heading-5">{name}</p>
+                            <p className="heading-5">{studentName}</p>
                         </Button>
                         <p className="email">{student.email}</p>
                         <div className="campus">
