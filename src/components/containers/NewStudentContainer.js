@@ -20,13 +20,24 @@ class NewStudentContainer extends Component {
         this.state = {
             firstname: "",
             lastname: "",
-            campusId: this.props.match.params.id,
             imageUrl: "",
             email: "",
             redirect: false,
             redirectId: null,
             allCampuses: [],
+            campusId: null,
+            campusName: null,
         };
+
+        // get campusId and campusName from search query
+        const searchParams = new URLSearchParams(this.props.location.search);
+        const campusId = searchParams.get('campusId');
+        const campusName = searchParams.get('campusName');
+
+        if (campusId && campusName) {
+            this.state.campusId = campusId;
+            this.state.campusName = campusName;
+        }
     }
 
     // Get all campuses data from back-end database
@@ -122,7 +133,7 @@ class NewStudentContainer extends Component {
                         handleSubmit={this.handleSubmit}
                         getCampusesForSelect={this.getCampusesForSelect}
                         allCampuses={this.props.allCampuses}
-                        campusId={this.props.campusId}
+                        defaultCampus={{ label: this.state.campusName, id: this.state.campusId }}
                     />
                 </main>
             </div>

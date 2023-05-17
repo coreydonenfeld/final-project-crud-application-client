@@ -73,7 +73,7 @@ const CampusView = (props) => {
                     </ul>
                     <div className="add-new-student flex">
                         <p>Want to add a new student to {campus.name}?</p>
-                        <Button link={`/newstudent/?campus=${campus.id}`} type="secondary">Add New Student</Button>
+                        <Button link={`/newstudent/?campusId=${campus.id}&campusName=${campus.name}`} type="secondary">Add New Student</Button>
                     </div>
                 </aside>
             </Container>

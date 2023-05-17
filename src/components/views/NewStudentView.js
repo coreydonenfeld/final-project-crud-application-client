@@ -65,7 +65,9 @@ const SelectStyles = {
 };
 
 function NewStudentView(props) {
-    const { handleChange, handleSelectChange, handleSubmit, getCampusesForSelect } = props;
+    const { handleChange, handleSelectChange, handleSubmit, getCampusesForSelect, defaultCampus } = props;
+
+    console.log(props)
 
     // Render a New Student view with an input form
     return (
@@ -92,6 +94,7 @@ function NewStudentView(props) {
                         loadOptions={getCampusesForSelect}
                         onChange={(e) => handleSelectChange(e, 'campusId')}
                         placeholder="Select a campus"
+                        defaultValue={defaultCampus}
                         styles={SelectStyles}
                     />
                 </div>
