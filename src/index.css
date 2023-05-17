@@ -440,6 +440,10 @@ h1 + .campus-list {
     margin-top: 48px;
 }
 
+.campus-list + .btn.primary {
+    margin: 50px 0 80px;
+}
+
 .campus-list {
     list-style: none;
     margin: 0;
@@ -486,8 +490,26 @@ h1 + .campus-list {
     margin: 0;
 }
 
-.campus-item .btn.secondary {
+.campus-item .actions {
     margin: 20px 0 0;
+    align-items: center;
+}
+/* 
+.campus-item .actions .secondary {
+    opacity: 0;
+}
+
+.campus-item:hover .actions .secondary {
+    opacity: 1;
+} */
+
+.campus-item .actions .edit {
+    margin-left: auto;
+}
+
+.campus-item .actions .edit + .delete {
+    margin-left: 20px;
+    color: var(--red);
 }
 
 .students-preview {
@@ -822,7 +844,7 @@ main.campus {
 }
 
 .all-students > .grid + .btn.primary {
-    margin: 50px 0 0;
+    margin: 50px 0 80px;
 }
 
 .all-students .student-profile {

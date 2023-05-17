@@ -69,7 +69,11 @@ const AllCampusesView = ({ campuses }) => {
                                 </aside>
                             }
 
-                            <Button link={`/campus/${campus.id}`} type="secondary">View Campus</Button>
+                            <div className="actions flex">
+                                <Button link={`/campus/${campus.id}`} type="primary">View Campus</Button>
+                                <Button link={`/campus/${campus.id}/edit`} type="secondary" class="edit">Edit</Button>
+                                <Button link={`/campus/${campus.id}/delete`} type="secondary" class="delete">Delete</Button>
+                            </div>
                         </li>
                     );
                 })}
