@@ -13,7 +13,7 @@ const StudentView = (props) => {
         <Container>
             <h1>{student.firstname + " " + student.lastname}</h1>
             <h3>{student.campus.name}</h3>
-            <button className="btn primary" onClick={() => deleteStudent(student.id)}>Delete</button>
+            <button className="btn primary" onClick={() => deleteStudent(student.id, student.firstname)}>Delete</button>
         </Container>
     );
 
