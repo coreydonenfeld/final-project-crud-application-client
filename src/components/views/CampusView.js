@@ -8,7 +8,7 @@ import { Container, Button, Avatar } from "../jazzy-ui";
 
 // Take in props data to construct the component
 const CampusView = (props) => {
-    const { campus } = props;
+    const { campus, deleteCampus } = props;
 
     let Image = null;
     if (campus.imageUrl !== null) {
@@ -50,7 +50,7 @@ const CampusView = (props) => {
                                     <div className="actions flex">
                                         <Button link={`/student/${student.id}`} type="primary">View Student</Button>
                                         <Button link={`/student/${student.id}/edit`} type="secondary" class="edit">Edit</Button>
-                                        <Button link={`/student/${student.id}/delete`} type="secondary" class="delete">Delete</Button>
+                                        <Button link={`/student/${student.id}/delete?name=${student.firstname}&referrer=/campus/${campus.id}`} type="secondary" class="delete">Delete</Button>
                                     </div>
                                 </li>
                             );
@@ -66,7 +66,7 @@ const CampusView = (props) => {
                 <p className="heading-4">Quick Actions</p>
                 <Button link="/campuses" type="secondary go-back">Back to Campuses</Button>
                 <Button link={`/campus/${campus.id}/edit`} type="secondary edit">Edit Campus</Button>
-                <Button link={`/campus/${campus.id}/delete`} type="secondary delete">Delete</Button>
+                <button className="btn secondary delete" onClick={() => deleteCampus(campus.id, campus.name)}>Delete</button>
             </div>
         </>
     );

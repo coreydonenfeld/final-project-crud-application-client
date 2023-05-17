@@ -20,19 +20,57 @@ class CampusContainer extends Component {
         this.props.fetchCampus(this.props.match.params.id);
 
         // check if delete is at end of pathname
-        if (this.props.location.pathname.endsWith('delete')) {
-            // delete student
-            this.deleteStudentConfirm(this.props.match.params.id, this.props.student.firstname);
+        if (this.props.location.pathname.endsWith('delete') || this.props.location.pathname.endsWith('delete/')) {
+            // get campusId and campusName from search query
+            const searchParams = new URLSearchParams(this.props.location.search);
+            const campusName = searchParams.get('name');
+            const referrer = searchParams.get('referrer');
+            let redirectTo = false;
+
+            if (typeof referrer === 'string') {
+                redirectTo = referrer;
+                
+                // set the url in the browser to the referrer
+                window.history.replaceState(null, null, redirectTo);
+            }
+
+            // delete campus
+            this.deleteCampusConfirm(this.props.match.params.id, campusName || this.props.campus.name, redirectTo);
+        }
+    }
+
+    // Delete a campus. Confirms with user before deleting.
+    deleteCampusConfirm = (campusId, campusName = '', referrer = false) => {
+        if (!campusName) {
+            campusName = 'this campus';
+        } else {
+            campusName = "the campus " + campusName;
+        }
+        if (window.confirm(`Are you sure you want to delete ${campusName}?`)) {
+            this.props.deleteCampus(campusId);
+            // redirecting to all campuses page after deleting campus
+            this.setState({ redirect: true });
+        } else if (referrer !== false) {
+            // go back to referring page
+            this.setState({ redirect: true, redirectTarget: referrer });
         }
     }
 
     // Render a Campus view by passing campus data as props to the corresponding View component
     render() {
+        // Redirect to all students page after deleting student
+        if (this.state && this.state.redirect) {
+            if (this.state.redirectTarget) {
+                return <Redirect to={this.state.redirectTarget} />;
+            }
+            return <Redirect to="/campuses" />;
+        }
+
         return (
             <div>
                 <Header />
                 <main className="campus">
-                    <CampusView campus={this.props.campus} />
+                    <CampusView campus={this.props.campus} deleteCampus={this.deleteCampusConfirm} />
                 </main>
             </div>
         );
@@ -52,6 +90,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
     return {
         fetchCampus: (id) => dispatch(fetchCampusThunk(id)),
+        deleteCampus: (id) => dispatch(deleteCampusThunk(id)),
     };
 };
 

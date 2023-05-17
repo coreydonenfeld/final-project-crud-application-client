@@ -22,14 +22,27 @@ class StudentContainer extends Component {
         this.props.fetchStudent(this.props.match.params.id);
 
         // check if delete is at end of pathname
-        if (this.props.location.pathname.endsWith('delete')) {
+        if (this.props.location.pathname.endsWith('delete') || this.props.location.pathname.endsWith('delete/')) {
+            // get campusId and campusName from search query
+            const searchParams = new URLSearchParams(this.props.location.search);
+            const firstName = searchParams.get('name');
+            const referrer = searchParams.get('referrer');
+            let redirectTo = false;
+
+            if (typeof referrer === 'string') {
+                redirectTo = referrer;
+
+                // set the url in the browser to the referrer
+                window.history.replaceState(null, null, redirectTo);
+            }
+
             // delete student
-            this.deleteStudentConfirm(this.props.match.params.id, this.props.student.firstname);
+            this.deleteStudentConfirm(this.props.match.params.id, firstName || this.props.student.firstname, redirectTo);
         }
     }
 
     // Delete a student. Confirms with user before deleting.
-    deleteStudentConfirm = (studentId, studentName = '') => {
+    deleteStudentConfirm = (studentId, studentName = '', referrer = false) => {
         if (!studentName) {
             studentName = 'this student';
         } else {
@@ -39,6 +52,9 @@ class StudentContainer extends Component {
             this.props.deleteStudent(studentId);
             // redirecting to all students page after deleting student
             this.setState({ redirect: true });
+        } else if (referrer !== false) {
+            // go back to referring page
+            this.setState({ redirect: true, redirectTarget: referrer });
         }
     }
 
@@ -46,6 +62,9 @@ class StudentContainer extends Component {
     render() {
         // Redirect to all students page after deleting student
         if (this.state && this.state.redirect) {
+            if (this.state.redirectTarget) {
+                return <Redirect to={this.state.redirectTarget} />;
+            }
             return <Redirect to="/students" />;
         }
 

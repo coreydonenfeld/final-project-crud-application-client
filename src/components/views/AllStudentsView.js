@@ -42,7 +42,7 @@ const AllStudentsView = (props) => {
                         <div className="actions flex">
                             <Button link={`/student/${student.id}`} type="primary">View Student</Button>
                             <Button link={`/student/${student.id}/edit`} type="secondary" class="edit">Edit</Button>
-                            <button onClick={() => deleteStudent(student.id)} type="button" className="btn secondary delete">Delete</button>
+                            <Button link={`/student/${student.id}/delete?name=${student.firstname}&referrer=/students`} type="secondary" class="delete">Delete</Button>
                         </div>
                     </li>
                 );
