@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import NewStudentView from '../views/NewStudentView';
-import { addStudentThunk } from '../../store/thunks';
+import { addStudentThunk, fetchAllCampusesThunk } from '../../store/thunks';
 
 class NewStudentContainer extends Component {
     // Initialize state
@@ -21,10 +21,17 @@ class NewStudentContainer extends Component {
             firstname: "",
             lastname: "",
             campusId: null,
+            imageUrl: "",
             email: "",
             redirect: false,
-            redirectId: null
+            redirectId: null,
+            allCampuses: [],
         };
+    }
+
+    // Get all campuses data from back-end database
+    componentDidMount() {
+        this.props.fetchAllCampuses();
     }
 
     // Capture input data when it is entered
@@ -32,6 +39,36 @@ class NewStudentContainer extends Component {
         this.setState({
             [event.target.name]: event.target.value
         });
+    }
+
+    // Capture selected campus when it is selected
+    handleSelectChange = (selectedOption, name) => {
+        this.setState({
+            [name]: selectedOption.value
+        });
+    }
+
+    getCampusesForSelect = async (input) => {
+        await this.props.fetchAllCampuses();
+        
+        let campuses = this.props.allCampuses;
+
+        // map campuses to an array of objects with label and value
+        campuses = campuses.map(campus => {
+            return {
+                label: campus.name,
+                value: campus.id
+            };
+        });
+
+        // check if each campus name contains the input string
+        if (typeof input === 'string') {
+            campuses = campuses.filter(campus => {
+                return campus.label.toLowerCase().includes(input.toLowerCase());
+            });
+        }
+
+        return campuses;
     }
 
     // Take action after user click the submit button
@@ -43,6 +80,8 @@ class NewStudentContainer extends Component {
             lastname: this.state.lastname,
             campusId: this.state.campusId,
             email: this.state.email,
+            imageUrl: this.state.imageUrl,
+            gpa: this.state.gpa,
         };
 
         // Add new student in back-end database
@@ -55,7 +94,9 @@ class NewStudentContainer extends Component {
             campusId: null,
             email: "",
             redirect: true,
-            redirectId: newStudent.id
+            redirectId: newStudent.id,
+            gpa: "",
+            imageUrl: "",
         });
     }
 
@@ -78,7 +119,10 @@ class NewStudentContainer extends Component {
                 <main>
                     <NewStudentView
                         handleChange={this.handleChange}
+                        handleSelectChange={this.handleSelectChange}
                         handleSubmit={this.handleSubmit}
+                        getCampusesForSelect={this.getCampusesForSelect}
+                        allCampuses={this.props.allCampuses}
                     />
                 </main>
             </div>
@@ -86,16 +130,23 @@ class NewStudentContainer extends Component {
     }
 }
 
+const mapState = (state) => {
+    return {
+        allCampuses: state.allCampuses,  // Get the State object from Reducer "allCampuses"
+    };
+};
+
 // The following input argument is passed to the "connect" function used by "NewStudentContainer" component to connect to Redux Store.
 // The "mapDispatch" argument is used to dispatch Action (Redux Thunk) to Redux Store.
 // The "mapDispatch" calls the specific Thunk to dispatch its action. The "dispatch" is a function of Redux Store.
 const mapDispatch = (dispatch) => {
     return ({
         addStudent: (student) => dispatch(addStudentThunk(student)),
+        fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
     })
 }
 
 // Export store-connected container by default
 // NewStudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default connect(null, mapDispatch)(NewStudentContainer);
+export default connect(mapState, mapDispatch)(NewStudentContainer);
