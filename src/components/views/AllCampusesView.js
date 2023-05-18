@@ -78,7 +78,7 @@ const AllCampusesView = ({ campuses }) => {
                     );
                 })}
             </ul>
-            <Button link={`/`} type="primary">Add New Campus</Button>
+            <Button link={`/newcampus`} type="primary">Add New Campus</Button>
         </Container>
     );
 };
