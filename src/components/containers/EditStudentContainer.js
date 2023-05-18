@@ -11,7 +11,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { editStudentThunk, fetchAllCampusesThunk, fetchStudentThunk } from '../../store/thunks';
 
 import Header from './Header';
-import { EditStudentView } from '../views';
+import { UpdateStudentView } from '../views';
 
 class EditStudentContainer extends Component {
 
@@ -235,7 +235,10 @@ class EditStudentContainer extends Component {
             <div>
                 <Header />
                 <main className="new-student">
-                    <EditStudentView
+                    <UpdateStudentView
+                        formTitle="Edit Student"
+                        submitButtonText="Update"
+
                         handleChange={this.handleChange}
                         handleSelectChange={this.handleSelectChange}
                         handleSubmit={this.handleSubmit}

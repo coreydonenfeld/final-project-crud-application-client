@@ -11,36 +11,37 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { addStudentThunk, fetchAllCampusesThunk } from '../../store/thunks';
 
 import Header from './Header';
-import NewStudentView from '../views/NewStudentView';
+import { UpdateStudentView } from '../views';
 
 class NewStudentContainer extends Component {
     // Initialize state
     constructor(props) {
         super(props);
         this.state = {
+            studentId: this.props.match.params.id || null,
             firstname: "",
             lastname: "",
-            imageUrl: "",
+            campusId: "",
             email: "",
+            gpa: "",
+            imageUrl: "",
             redirect: false,
             redirectId: null,
             allCampuses: [],
-            defaultCampus: null,
-            campusId: null,
         };
+    }
 
-        // get campusId and campusName from search query
+    // Fetch campus data when component mounts
+    async componentDidMount() {
+        await this.props.fetchAllCampuses();
+
         const searchParams = new URLSearchParams(this.props.location.search);
-        const campusId = searchParams.get('campusId');
-        const campusName = searchParams.get('campusName');
+        const campusId = parseInt(searchParams.get('campusId') || 0);
 
-        if (campusId && campusName) {
-            this.state.defaultCampus = {
-                label: campusName,
-                value: campusId,
-            };
-            this.state.campusId = campusId;
-        }
+        this.setState({
+            allCampuses: this.props.allCampuses,
+            campusId: campusId,
+        });
     }
 
     // Capture input data when it is entered
@@ -53,31 +54,10 @@ class NewStudentContainer extends Component {
 
     // Capture selected campus when it is selected
     handleSelectChange = (selectedOption, name) => {
+        this.clearErrorNotices();
         this.setState({
             [name]: selectedOption.value
         });
-    }
-
-    getCampusesForSelect = async (input) => {
-        await this.props.fetchAllCampuses();
-        let campuses = this.props.allCampuses;
-
-        // map campuses to an array of objects with label and value
-        campuses = campuses.map(campus => {
-            return {
-                label: campus.name,
-                value: campus.id,
-            };
-        });
-
-        // check if each campus name contains the input string
-        if (typeof input === 'string') {
-            campuses = campuses.filter(campus => {
-                return campus.label.toLowerCase().includes(input.toLowerCase());
-            });
-        }
-
-        return campuses;
     }
 
     getErrorNotices = () => {
@@ -112,89 +92,99 @@ class NewStudentContainer extends Component {
     }
 
     // Take action after user click the submit button
-    handleSubmit = async event => {
+    handleSubmit = async (event) => {
         event.preventDefault();  // Prevent browser reload/refresh after submit.
 
-        // error handling
-        const errors = [
-            {
-                field: 'firstname',
-                message: 'Please enter a first name.',
-                validation: 'required',
-            },
-            {
-                field: 'lastname',
-                message: 'Please enter a last name.',
-                validation: 'required',
-            },
-            {
-                field: 'email',
-                message: 'Please enter an email address.',
-                validation: 'required',
-            },
-            {
-                field: 'campusId',
-                message: 'Please select a campus.',
-                validation: 'required',
-            },
-            {
-                field: 'gpa',
-                message: 'Please enter a GPA between 0 and 4.',
-                validation: (gpa) => {
-                    if (typeof gpa === 'undefined') return true;  // allow empty string (no GPA)
-                    return gpa >= 0 && gpa <= 4;
-                }
-            },
-            {
-                field: 'imageUrl',
-                message: 'Please enter a valid URL.',
-            }
-        ];
-        this.clearErrorNotices();
-
-        let isValid = true;
-        errors.forEach(error => {
-            if (error.validation === 'required' && !this.state[error.field]) {
-                this.addErrorNotice(error.message, error.field);
-                isValid = false;
-            } else if (typeof error.validation === 'function' && !error.validation(this.state[error.field])) {
-                this.addErrorNotice(error.message, error.field);
-                isValid = false;
-            }
-
-            // check that it is not greater than 255 characters
-            if (this.state[error.field] && this.state[error.field].length > 255) {
-                this.addErrorNotice('Please enter a value less than 255 characters.', error.field);
-                isValid = false;
-            }
-        });
-
-        if (!isValid) {
-            return;
-        }
-
-        let student = {
-            firstname: this.state.firstname,
-            lastname: this.state.lastname,
-            campusId: this.state.campusId,
-            email: this.state.email,
-            imageUrl: this.state.imageUrl,
-            gpa: this.state.gpa,
-        };
-
-        // Add new student in back-end database
-        let newStudent = await this.props.addStudent(student);
-
-        // Update state, and trigger redirect to show the new student
         this.setState({
-            firstname: "",
-            lastname: "",
-            campusId: null,
-            email: "",
-            redirect: true,
-            redirectId: newStudent.id,
-            gpa: "",
-            imageUrl: "",
+            firstname: event.target.firstname.value,
+            lastname: event.target.lastname.value,
+            campusId: parseInt(event.target.campusId.value),
+            email: event.target.email.value,
+            gpa: event.target.gpa.value,
+            imageUrl: event.target.imageUrl.value,
+        }, async () => {
+            // error handling
+            const errors = [
+                {
+                    field: 'firstname',
+                    message: 'Please enter a first name.',
+                    validation: 'required',
+                },
+                {
+                    field: 'lastname',
+                    message: 'Please enter a last name.',
+                    validation: 'required',
+                },
+                {
+                    field: 'email',
+                    message: 'Please enter an email address.',
+                    validation: 'required',
+                },
+                {
+                    field: 'campusId',
+                    message: 'Please select a campus.',
+                    validation: 'required',
+                },
+                {
+                    field: 'gpa',
+                    message: 'Please enter a GPA between 0 and 4.',
+                    validation: (gpa) => {
+                        if (typeof gpa === 'undefined') return true;  // allow empty string (no GPA)
+                        return gpa >= 0 && gpa <= 4;
+                    }
+                },
+                {
+                    field: 'imageUrl',
+                    message: 'Please enter a valid URL.',
+                }
+            ];
+            this.clearErrorNotices();
+
+            let isValid = true;
+            errors.forEach(error => {
+                if (error.validation === 'required' && !this.state[error.field]) {
+                    this.addErrorNotice(error.message, error.field);
+                    isValid = false;
+                } else if (typeof error.validation === 'function' && !error.validation(this.state[error.field])) {
+                    this.addErrorNotice(error.message, error.field);
+                    isValid = false;
+                }
+
+                // check that it is not greater than 255 characters
+                if (this.state[error.field] && this.state[error.field].length > 255) {
+                    this.addErrorNotice('Please enter a value less than 255 characters.', error.field);
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                return;
+            }
+
+            let student = {
+                id: this.state.studentId,
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                campusId: this.state.campusId,
+                email: this.state.email,
+                imageUrl: this.state.imageUrl,
+                gpa: this.state.gpa || null,
+            };
+
+            // Add new student in back-end database
+            let newStudent = await this.props.addStudent(student);
+
+            // Update state, and trigger redirect to show the new student
+            this.setState({
+                firstname: "",
+                lastname: "",
+                campusId: null,
+                email: "",
+                redirect: true,
+                redirectId: newStudent.id,
+                gpa: null,
+                imageUrl: "",
+            });
         });
     }
 
@@ -215,13 +205,22 @@ class NewStudentContainer extends Component {
             <div>
                 <Header />
                 <main className="new-student">
-                    <NewStudentView
+                    <UpdateStudentView
+                        formTitle="Add Student"
+                        submitButtonText="Add New Student"
+
                         handleChange={this.handleChange}
                         handleSelectChange={this.handleSelectChange}
                         handleSubmit={this.handleSubmit}
-                        getCampusesForSelect={this.getCampusesForSelect}
-                        allCampuses={this.props.allCampuses}
-                        defaultCampus={this.state.defaultCampus}
+                        student={this.props.student}
+                        campuses={this.props.allCampuses}
+
+                        campusId={this.state.campusId}
+                        firstname={this.state.firstname}
+                        lastname={this.state.lastname}
+                        email={this.state.email}
+                        gpa={this.state.gpa}
+                        imageUrl={this.state.imageUrl }
                     />
                 </main>
             </div>

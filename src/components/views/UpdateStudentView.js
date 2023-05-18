@@ -1,8 +1,8 @@
 /*==================================================
-NewStudentView.js
+UpdateStudentView.js
 
 The Views component is responsible for rendering web page with data provided by the corresponding Container component.
-It constructs a React component to display the new student page.
+It constructs a React component to display the new/edit student page.
 ================================================== */
 import { Button, Container } from '../jazzy-ui';
 import Select from 'react-select';
@@ -64,9 +64,10 @@ const SelectStyles = {
     }),
 };
 
-function EditStudentView(props) {
+function UpdateStudentView(props) {
     const { handleChange, handleSelectChange, handleSubmit, student, campuses } = props;
     const { campusId, firstname, lastname, email, gpa, imageUrl } = props;
+    const { formTitle, submitButtonText } = props;
 
     let selectedCampus = null;
     let campusesOptions = campuses.map((campus) => {
@@ -77,25 +78,29 @@ function EditStudentView(props) {
     });
 
     // find campus that matches campusId
-    if (campusId) {
+    if (campusId && !isNaN(campusId)) {
         selectedCampus = campusesOptions.find((campus) => {
             return campus.value === campusId;
         });
+        console.log("selectedCampus:", selectedCampus);
     } else {
-        selectedCampus = {
-            value: student.campus.id,
-            label: student.campus.name,
+        if (typeof student === 'object' && student.campus !== null) {
+            selectedCampus = {
+                value: student.campus.id,
+                label: student.campus.name,
+            }
         }
     }
 
-    if (selectedCampus.value === undefined) {
+    // // no campus selected    
+    if (selectedCampus === undefined || selectedCampus !== null && selectedCampus.value === undefined) {
         selectedCampus = null;
     }
 
     // Render a New Student view with an input form
     return (
         <Container grid>
-            <h1 className="heading-2">Add Student</h1>
+            <h1 className="heading-2">{formTitle}</h1>
             <form onSubmit={(e) => handleSubmit(e)} className="grid main-form add-student">
                 <div id="error-notices"></div>
 
@@ -136,10 +141,10 @@ function EditStudentView(props) {
                     <input type="url" name="imageUrl" value={imageUrl} onChange={(e) => handleChange(e)} />
                 </div>
 
-                <Button role="submit" type="primary">Update</Button>
+                <Button role="submit" type="primary">{submitButtonText}</Button>
             </form>
         </Container>
     );
 }
 
-export default EditStudentView;
+export default UpdateStudentView;
