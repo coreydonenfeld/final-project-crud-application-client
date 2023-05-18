@@ -114,7 +114,12 @@ function UpdateStudentView(props) {
                 </div>
 
                 <div className="form-input-wrapper">
-                    <label>Campus <span className="required">(required)</span></label>
+                    <label>Email <span className="required">(required)</span></label>
+                    <input type="email" name="email" value={email} onChange={(e) => handleChange(e)} />
+                </div>
+
+                <div className="form-input-wrapper">
+                    <label>Campus</label>
                     <Select
                         name="campusId"
                         options={campusesOptions}
@@ -123,11 +128,6 @@ function UpdateStudentView(props) {
                         value={selectedCampus}
                         styles={SelectStyles}
                     />
-                </div>
-
-                <div className="form-input-wrapper">
-                    <label>Email <span className="required">(required)</span></label>
-                    <input type="email" name="email" value={email} onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="form-input-wrapper">

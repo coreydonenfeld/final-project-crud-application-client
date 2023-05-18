@@ -126,11 +126,11 @@ class EditStudentContainer extends Component {
                     message: 'Please enter an email address.',
                     validation: 'required',
                 },
-                {
-                    field: 'campusId',
-                    message: 'Please select a campus.',
-                    validation: 'required',
-                },
+                // {
+                //     field: 'campusId',
+                //     message: 'Please select a campus.',
+                //     validation: 'required',
+                // },
                 {
                     field: 'gpa',
                     message: 'Please enter a GPA between 0 and 4.',
