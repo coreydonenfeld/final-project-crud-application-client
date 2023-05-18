@@ -14,7 +14,6 @@ import Header from './Header';
 import { UpdateCampusView } from '../views';
 
 class EditCampusContainer extends Component {
-
     // Initialize state
     constructor(props) {
         super(props);
