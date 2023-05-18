@@ -6,8 +6,7 @@ It constructs a React component to display the all students view page.
 ================================================== */
 import { Button, Container, Avatar } from '../jazzy-ui';
 
-const AllStudentsView = (props) => {
-    const { students, deleteStudent } = props;
+const AllStudentsView = ({ students }) => {
     // If there is no student, display a message
     if (!students.length) {
         return (

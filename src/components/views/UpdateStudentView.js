@@ -93,7 +93,7 @@ function UpdateStudentView(props) {
     }
 
     // // no campus selected    
-    if (selectedCampus === undefined || selectedCampus !== null && selectedCampus.value === undefined) {
+    if (selectedCampus === undefined || (selectedCampus !== null && selectedCampus.value === undefined)) {
         selectedCampus = null;
     }
 
