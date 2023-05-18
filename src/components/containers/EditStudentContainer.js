@@ -127,11 +127,6 @@ class EditStudentContainer extends Component {
                     validation: 'required',
                 },
                 {
-                    field: 'campusId',
-                    message: 'Please select a campus.',
-                    validation: 'required',
-                },
-                {
                     field: 'gpa',
                     message: 'Please enter a GPA between 0 and 4.',
                     validation: (gpa) => {
@@ -139,10 +134,6 @@ class EditStudentContainer extends Component {
                         return gpa >= 0 && gpa <= 4;
                     }
                 },
-                {
-                    field: 'imageUrl',
-                    message: 'Please enter a valid URL.',
-                }
             ];
             this.clearErrorNotices();
 

@@ -7,11 +7,11 @@ If needed, it also defines the component's "connect" function.
 ================================================== */
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { addCampusThunk } from '../../store/thunks';
 
 import Header from './Header';
-import NewCampusView from '../views/NewCampusView';
+import { UpdateCampusView } from '../views';
 
 class NewCampusContainer extends Component {
     // Initialize state
@@ -148,7 +148,10 @@ class NewCampusContainer extends Component {
             <div>
                 <Header />
                 <main className="new-campus">
-                    <NewCampusView
+                    <UpdateCampusView
+                        formTitle="Add New Campus"
+                        submitButtonText="Add Campus"
+
                         handleChange={this.handleChange}
                         handleSubmit={this.handleSubmit}
                     />
@@ -169,4 +172,4 @@ const mapDispatch = (dispatch) => {
 // Export store-connected container by default
 // NewStudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default withRouter(connect(null, mapDispatch)(NewCampusContainer));
+export default connect(null, mapDispatch)(NewCampusContainer);
