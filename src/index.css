@@ -655,6 +655,10 @@ main.campus {
     position: relative;
 }
 
+.campus .content-wrapper.full {
+    grid-column: span 6;
+}
+
 .campus .content-wrapper > p {
     margin: 0;
 }
