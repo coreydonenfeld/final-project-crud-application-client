@@ -1,11 +1,11 @@
 /*==================================================
-NewStudentView.js
+UpdateStudentView.js
 
 The Views component is responsible for rendering web page with data provided by the corresponding Container component.
-It constructs a React component to display the new student page.
+It constructs a React component to display the new/edit student page.
 ================================================== */
 import { Button, Container } from '../jazzy-ui';
-import AsyncSelect from 'react-select/async';
+import Select from 'react-select';
 
 const SelectStyles = {
     control: (baseStyles, state) => ({
@@ -64,59 +64,86 @@ const SelectStyles = {
     }),
 };
 
-function NewStudentView(props) {
-    const { handleChange, handleSelectChange, handleSubmit, getCampusesForSelect, defaultCampus } = props;
+function UpdateStudentView(props) {
+    const { handleChange, handleSelectChange, handleSubmit, student, campuses } = props;
+    const { campusId, firstname, lastname, email, gpa, imageUrl } = props;
+    const { formTitle, submitButtonText } = props;
+
+    let selectedCampus = null;
+    let campusesOptions = campuses.map((campus) => {
+        return {
+            value: campus.id,
+            label: campus.name,
+        };
+    });
+
+    // find campus that matches campusId
+    if (campusId && !isNaN(campusId)) {
+        selectedCampus = campusesOptions.find((campus) => {
+            return campus.value === campusId;
+        });
+    } else {
+        if (typeof student === 'object' && student.campus !== null) {
+            selectedCampus = {
+                value: student.campus.id,
+                label: student.campus.name,
+            }
+        }
+    }
+
+    // no campus selected    
+    if (selectedCampus === undefined || (selectedCampus !== null && selectedCampus.value === undefined)) {
+        selectedCampus = null;
+    }
 
     // Render a New Student view with an input form
     return (
         <Container grid>
-            <h1 className="heading-2">Add Student</h1>
+            <h1 className="heading-2">{formTitle}</h1>
             <form onSubmit={(e) => handleSubmit(e)} className="grid main-form add-student">
                 <div id="error-notices"></div>
 
                 <div className="form-input-wrapper">
                     <label>First Name <span className="required">(required)</span></label>
-                    <input type="text" name="firstname" onChange={(e) => handleChange(e)} />
+                    <input type="text" name="firstname" value={firstname} onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="form-input-wrapper">
                     <label>Last Name <span className="required">(required)</span></label>
-                    <input type="text" name="lastname" onChange={(e) => handleChange(e)} />
+                    <input type="text" name="lastname" value={lastname} onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="form-input-wrapper">
                     <label>Campus <span className="required">(required)</span></label>
-                    <AsyncSelect
+                    <Select
                         name="campusId"
-                        cacheOptions
-                        defaultOptions
-                        loadOptions={getCampusesForSelect}
+                        options={campusesOptions}
                         onChange={(e) => handleSelectChange(e, 'campusId')}
                         placeholder="Select a campus"
-                        defaultValue={defaultCampus}
+                        value={selectedCampus}
                         styles={SelectStyles}
                     />
                 </div>
 
                 <div className="form-input-wrapper">
                     <label>Email <span className="required">(required)</span></label>
-                    <input type="email" name="email" onChange={(e) => handleChange(e)} />
+                    <input type="email" name="email" value={email} onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="form-input-wrapper">
                     <label>GPA</label>
-                    <input type="number" min="0" max="4" step=".1" name="gpa" onChange={(e) => handleChange(e)} />
+                    <input type="number" min="0" max="4" step=".1" name="gpa" value={gpa} onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="form-input-wrapper">
                     <label>Image URL</label>
-                    <input type="url" name="imageUrl" onChange={(e) => handleChange(e)} />
+                    <input type="url" name="imageUrl" value={imageUrl} onChange={(e) => handleChange(e)} />
                 </div>
 
-                <Button role="submit" type="primary">Add New Student</Button>
+                <Button role="submit" type="primary">{submitButtonText}</Button>
             </form>
         </Container>
     );
 }
 
-export default NewStudentView;
+export default UpdateStudentView;

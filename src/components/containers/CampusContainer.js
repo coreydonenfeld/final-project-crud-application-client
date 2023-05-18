@@ -5,12 +5,12 @@ The Container component is responsible for stateful logic and data fetching, and
 passes data (if any) as props to the corresponding View component.
 If needed, it also defines the component's "connect" function.
 ================================================== */
-import Header from './Header';
-import React, { Component } from "react";
+import { Component } from "react";
 import { connect } from "react-redux";
 import { fetchCampusThunk, deleteCampusThunk } from "../../store/thunks";
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
+import Header from './Header';
 import { CampusView } from "../views";
 
 class CampusContainer extends Component {
@@ -29,7 +29,7 @@ class CampusContainer extends Component {
 
             if (typeof referrer === 'string') {
                 redirectTo = referrer;
-                
+
                 // set the url in the browser to the referrer
                 window.history.replaceState(null, null, redirectTo);
             }
@@ -97,4 +97,4 @@ const mapDispatch = (dispatch) => {
 // Export store-connected container by default
 // CampusContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default connect(mapState, mapDispatch)(CampusContainer);
+export default withRouter(connect(mapState, mapDispatch)(CampusContainer));

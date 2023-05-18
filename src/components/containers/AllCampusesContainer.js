@@ -5,16 +5,13 @@ The Container component is responsible for stateful logic and data fetching, and
 passes data (if any) as props to the corresponding View component.
 If needed, it also defines the component's "connect" function.
 ================================================== */
-import Header from './Header';
 import { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { fetchAllCampusesThunk } from "../../store/thunks";
 
-import {
-    fetchAllCampusesThunk
-} from "../../store/thunks";
-
+import Header from './Header';
 import { AllCampusesView } from "../views";
 
 class AllCampusesContainer extends Component {
@@ -36,23 +33,19 @@ class AllCampusesContainer extends Component {
     }
 }
 
-// 1. The "mapState" argument specifies the data from Redux Store that the component needs.
-// The "mapState" is called when the Store State changes, and it returns a data object of "allCampuses".
-// The following 2 input arguments are passed to the "connect" function used by "AllCampusesContainer" component to connect to Redux Store.
+// Map state and dispatch
 const mapState = (state) => {
     return {
         allCampuses: state.allCampuses,  // Get the State object from Reducer "allCampuses"
     };
 };
-// 2. The "mapDispatch" argument is used to dispatch Action (Redux Thunk) to Redux Store.
-// The "mapDispatch" calls the specific Thunk to dispatch its action. The "dispatch" is a function of Redux Store.
 const mapDispatch = (dispatch) => {
     return {
         fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
     };
 };
 
-// Type check props;
+// Type check props using PropTypes
 AllCampusesContainer.propTypes = {
     allCampuses: PropTypes.array.isRequired,
     fetchAllCampuses: PropTypes.func.isRequired,

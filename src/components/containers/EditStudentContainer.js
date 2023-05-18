@@ -1,5 +1,5 @@
 /*==================================================
-NewStudentContainer.js
+EditStudentContainer.js
 
 The Container component is responsible for stateful logic and data fetching, and
 passes data (if any) as props to the corresponding View component.
@@ -8,12 +8,13 @@ If needed, it also defines the component's "connect" function.
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { addStudentThunk, fetchAllCampusesThunk } from '../../store/thunks';
+import { editStudentThunk, fetchAllCampusesThunk, fetchStudentThunk } from '../../store/thunks';
 
 import Header from './Header';
 import { UpdateStudentView } from '../views';
 
-class NewStudentContainer extends Component {
+class EditStudentContainer extends Component {
+
     // Initialize state
     constructor(props) {
         super(props);
@@ -31,17 +32,19 @@ class NewStudentContainer extends Component {
         };
     }
 
-    // Fetch campus data when component mounts
+    // Fetch student data when component mounts
     async componentDidMount() {
         await this.props.fetchAllCampuses();
-
-        // Get campusId from query string
-        const searchParams = new URLSearchParams(this.props.location.search);
-        const campusId = parseInt(searchParams.get('campusId') || 0);
+        await this.props.fetchStudent(this.props.match.params.id);
 
         this.setState({
-            allCampuses: this.props.allCampuses,
-            campusId: campusId,
+            studentId: this.props.student.id,
+            firstname: this.props.student.firstname,
+            lastname: this.props.student.lastname,
+            campusId: this.props.student.campusId,
+            email: this.props.student.email,
+            gpa: this.props.student.gpa || "",
+            imageUrl: this.props.student.imageUrl || "",
         });
     }
 
@@ -97,6 +100,7 @@ class NewStudentContainer extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();  // Prevent browser reload/refresh after submit.
 
+        // Update state with new student data
         this.setState({
             firstname: event.target.firstname.value,
             lastname: event.target.lastname.value,
@@ -105,7 +109,7 @@ class NewStudentContainer extends Component {
             gpa: event.target.gpa.value,
             imageUrl: event.target.imageUrl.value,
         }, async () => {
-            // error handling
+            // Error handling
             const errors = [
                 {
                     field: 'firstname',
@@ -169,12 +173,12 @@ class NewStudentContainer extends Component {
                 lastname: this.state.lastname,
                 campusId: this.state.campusId,
                 email: this.state.email,
-                imageUrl: this.state.imageUrl,
+                imageUrl: this.state.imageUrl || null,
                 gpa: this.state.gpa || null,
             };
 
             // Add new student in back-end database
-            let newStudent = await this.props.addStudent(student);
+            let newStudent = await this.props.editStudent(student);
 
             // Update state, and trigger redirect to show the new student
             this.setState({
@@ -191,7 +195,7 @@ class NewStudentContainer extends Component {
         });
     }
 
-    // Unmount when the component is being removed from the DOM:
+    // Unmount when the component is being removed from the DOM
     componentWillUnmount() {
         this.setState({ redirect: false, redirectId: null });
     }
@@ -209,12 +213,13 @@ class NewStudentContainer extends Component {
                 <Header />
                 <main className="new-student">
                     <UpdateStudentView
-                        formTitle="Add Student"
-                        submitButtonText="Add New Student"
+                        formTitle="Edit Student"
+                        submitButtonText="Update"
 
                         handleChange={this.handleChange}
                         handleSelectChange={this.handleSelectChange}
                         handleSubmit={this.handleSubmit}
+
                         student={this.props.student}
                         campuses={this.props.allCampuses}
 
@@ -234,16 +239,18 @@ class NewStudentContainer extends Component {
 const mapState = (state) => {
     return {
         allCampuses: state.allCampuses,  // Get the State object from Reducer "allCampuses"
+        student: state.student,
     };
 };
 const mapDispatch = (dispatch) => {
     return ({
-        addStudent: (student) => dispatch(addStudentThunk(student)),
+        editStudent: (student) => dispatch(editStudentThunk(student)),
         fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
+        fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
     })
 }
 
 // Export store-connected container by default
 // NewStudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default connect(mapState, mapDispatch)(NewStudentContainer);
+export default connect(mapState, mapDispatch)(EditStudentContainer);
