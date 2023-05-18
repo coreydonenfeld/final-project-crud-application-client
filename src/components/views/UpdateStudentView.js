@@ -82,7 +82,6 @@ function UpdateStudentView(props) {
         selectedCampus = campusesOptions.find((campus) => {
             return campus.value === campusId;
         });
-        console.log("selectedCampus:", selectedCampus);
     } else {
         if (typeof student === 'object' && student.campus !== null) {
             selectedCampus = {
@@ -92,7 +91,7 @@ function UpdateStudentView(props) {
         }
     }
 
-    // // no campus selected    
+    // no campus selected    
     if (selectedCampus === undefined || (selectedCampus !== null && selectedCampus.value === undefined)) {
         selectedCampus = null;
     }

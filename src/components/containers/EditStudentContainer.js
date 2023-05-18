@@ -7,7 +7,7 @@ If needed, it also defines the component's "connect" function.
 ================================================== */
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { editStudentThunk, fetchAllCampusesThunk, fetchStudentThunk } from '../../store/thunks';
 
 import Header from './Header';
@@ -54,42 +54,18 @@ class EditStudentContainer extends Component {
         this.setState({
             [event.target.name]: event.target.value
         });
-        console.log('handle change: ' ,this.state);
     }
 
     // Capture selected campus when it is selected
     handleSelectChange = (selectedOption, name) => {
-        console.log('selectedOption: ', selectedOption);
+        this.clearErrorNotices();
         this.setState({
             [name]: selectedOption.value
         });
     }
 
-    getCampusesForSelect = async (input) => {
-        await this.props.fetchAllCampuses();
-        let campuses = this.props.allCampuses;
-
-        // map campuses to an array of objects with label and value
-        campuses = campuses.map(campus => {
-            return {
-                label: campus.name,
-                value: campus.id,
-            };
-        });
-
-        // check if each campus name contains the input string
-        if (typeof input === 'string') {
-            campuses = campuses.filter(campus => {
-                return campus.label.toLowerCase().includes(input.toLowerCase());
-            });
-        }
-
-        return campuses;
-    }
-
     getErrorNotices = () => {
-        const errorNotices = document.getElementById('error-notices');
-        return errorNotices;
+        return document.getElementById('error-notices');
     }
 
     addErrorNotice = (message, field = '') => {
@@ -98,6 +74,7 @@ class EditStudentContainer extends Component {
         notice.innerHTML = message;
         errorNotices.appendChild(notice);
 
+        // Add error class to input wrapper
         if (field) {
             let input = document.querySelector(`input[name=${field}]`);
             let inputWrapper = input.parentElement;
@@ -111,6 +88,7 @@ class EditStudentContainer extends Component {
         const errorNotices = this.getErrorNotices();
         errorNotices.innerHTML = '';
 
+        // Remove error class from input wrapper
         const inputs = document.querySelectorAll('.form-input-wrapper input');
         inputs.forEach(input => {
             let inputWrapper = input.parentElement;
@@ -122,18 +100,16 @@ class EditStudentContainer extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();  // Prevent browser reload/refresh after submit.
 
-        console.log(event.target.firstname.value);
-
-
+        // Update state with new student data
         this.setState({
             firstname: event.target.firstname.value,
             lastname: event.target.lastname.value,
-            campusId: event.target.campusId.value,
+            campusId: parseInt(event.target.campusId.value),
             email: event.target.email.value,
             gpa: event.target.gpa.value,
             imageUrl: event.target.imageUrl.value,
         }, async () => {
-            // error handling
+            // Error handling
             const errors = [
                 {
                     field: 'firstname',
@@ -197,7 +173,7 @@ class EditStudentContainer extends Component {
                 lastname: this.state.lastname,
                 campusId: this.state.campusId,
                 email: this.state.email,
-                imageUrl: this.state.imageUrl,
+                imageUrl: this.state.imageUrl || null,
                 gpa: this.state.gpa || null,
             };
 
@@ -206,19 +182,20 @@ class EditStudentContainer extends Component {
 
             // Update state, and trigger redirect to show the new student
             this.setState({
+                studentId: "",
                 firstname: "",
                 lastname: "",
-                campusId: null,
+                campusId: "",
                 email: "",
+                gpa: "",
+                imageUrl: "",
                 redirect: true,
                 redirectId: newStudent.id,
-                gpa: null,
-                imageUrl: "",
             });
         });
     }
 
-    // Unmount when the component is being removed from the DOM:
+    // Unmount when the component is being removed from the DOM
     componentWillUnmount() {
         this.setState({ redirect: false, redirectId: null });
     }
@@ -242,7 +219,7 @@ class EditStudentContainer extends Component {
                         handleChange={this.handleChange}
                         handleSelectChange={this.handleSelectChange}
                         handleSubmit={this.handleSubmit}
-                        getCampusesForSelect={this.getCampusesForSelect}
+
                         student={this.props.student}
                         campuses={this.props.allCampuses}
 
@@ -265,10 +242,6 @@ const mapState = (state) => {
         student: state.student,
     };
 };
-
-// The following input argument is passed to the "connect" function used by "NewStudentContainer" component to connect to Redux Store.
-// The "mapDispatch" argument is used to dispatch Action (Redux Thunk) to Redux Store.
-// The "mapDispatch" calls the specific Thunk to dispatch its action. The "dispatch" is a function of Redux Store.
 const mapDispatch = (dispatch) => {
     return ({
         editStudent: (student) => dispatch(editStudentThunk(student)),
@@ -280,4 +253,4 @@ const mapDispatch = (dispatch) => {
 // Export store-connected container by default
 // NewStudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default withRouter(connect(mapState, mapDispatch)(EditStudentContainer));
+export default connect(mapState, mapDispatch)(EditStudentContainer);

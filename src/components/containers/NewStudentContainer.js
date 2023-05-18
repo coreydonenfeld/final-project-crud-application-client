@@ -7,7 +7,7 @@ If needed, it also defines the component's "connect" function.
 ================================================== */
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { addStudentThunk, fetchAllCampusesThunk } from '../../store/thunks';
 
 import Header from './Header';
@@ -35,6 +35,7 @@ class NewStudentContainer extends Component {
     async componentDidMount() {
         await this.props.fetchAllCampuses();
 
+        // Get campusId from query string
         const searchParams = new URLSearchParams(this.props.location.search);
         const campusId = parseInt(searchParams.get('campusId') || 0);
 
@@ -61,8 +62,7 @@ class NewStudentContainer extends Component {
     }
 
     getErrorNotices = () => {
-        const errorNotices = document.getElementById('error-notices');
-        return errorNotices;
+        return document.getElementById('error-notices');
     }
 
     addErrorNotice = (message, field = '') => {
@@ -71,6 +71,7 @@ class NewStudentContainer extends Component {
         notice.innerHTML = message;
         errorNotices.appendChild(notice);
 
+        // Add error class to input wrapper
         if (field) {
             let input = document.querySelector(`input[name=${field}]`);
             let inputWrapper = input.parentElement;
@@ -84,6 +85,7 @@ class NewStudentContainer extends Component {
         const errorNotices = this.getErrorNotices();
         errorNotices.innerHTML = '';
 
+        // Remove error class from input wrapper
         const inputs = document.querySelectorAll('.form-input-wrapper input');
         inputs.forEach(input => {
             let inputWrapper = input.parentElement;
@@ -176,14 +178,15 @@ class NewStudentContainer extends Component {
 
             // Update state, and trigger redirect to show the new student
             this.setState({
+                studentId: "",
                 firstname: "",
                 lastname: "",
-                campusId: null,
+                campusId: "",
                 email: "",
+                gpa: "",
+                imageUrl: "",
                 redirect: true,
                 redirectId: newStudent.id,
-                gpa: null,
-                imageUrl: "",
             });
         });
     }
@@ -233,10 +236,6 @@ const mapState = (state) => {
         allCampuses: state.allCampuses,  // Get the State object from Reducer "allCampuses"
     };
 };
-
-// The following input argument is passed to the "connect" function used by "NewStudentContainer" component to connect to Redux Store.
-// The "mapDispatch" argument is used to dispatch Action (Redux Thunk) to Redux Store.
-// The "mapDispatch" calls the specific Thunk to dispatch its action. The "dispatch" is a function of Redux Store.
 const mapDispatch = (dispatch) => {
     return ({
         addStudent: (student) => dispatch(addStudentThunk(student)),
@@ -247,4 +246,4 @@ const mapDispatch = (dispatch) => {
 // Export store-connected container by default
 // NewStudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default withRouter(connect(mapState, mapDispatch)(NewStudentContainer));
+export default connect(mapState, mapDispatch)(NewStudentContainer);
