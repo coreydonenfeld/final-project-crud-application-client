@@ -27,15 +27,21 @@ const StudentView = (props) => {
                     <p className="medium large">{student.email}</p>
                     <p className="large">{student.gpa} GPA</p>
                 </div>
-                {
-                    student.campus && 
-                    <aside>
-                        <p className="heading-4">Attending</p>
+                <aside>
+                    <p className="heading-4">Attending</p>
+                    {
+                        student.campus === null &&
+                        <p className="heading-5">Not Enrolled</p>
+                    }
+                    {
+                        student.campus !== null &&
+                        <>
                         <p className="heading-5">{student.campus.name}</p>
                         <p className="medium">{student.campus.address}</p>
                         <Button link={`/campus/${student.campus.id}`} type="primary">View Campus</Button>
-                    </aside>
-                }
+                        </>
+                    }
+                </aside>
             </Container>
             <div className="actions quick-actions-nav flex">
                 <p className="heading-4">Quick Actions</p>

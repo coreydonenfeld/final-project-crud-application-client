@@ -11,7 +11,7 @@ const CampusView = (props) => {
     const { campus, deleteCampus } = props;
 
     let Image = null;
-    if (campus.imageUrl !== null) {
+    if (campus.imageUrl !== '') {
         Image = (
             <div className="image-wrapper">
                 <img src={campus.imageUrl} alt={campus.name} />
@@ -23,7 +23,7 @@ const CampusView = (props) => {
     return (
         <>
             <Container grid>
-                <div className="content-wrapper">
+                <div className={"content-wrapper" + (campus.imageUrl === '' ? ' full' : '')}>
                     <h1 className="heading-xl">{campus.name}</h1>
                     <p className="medium large">{campus.address}</p>
                     <p className="large">{campus.description}</p>
